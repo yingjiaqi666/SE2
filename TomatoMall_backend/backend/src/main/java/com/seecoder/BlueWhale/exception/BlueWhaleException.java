@@ -17,6 +17,12 @@ public class BlueWhaleException extends RuntimeException{
     public static BlueWhaleException notLogin(){
         return new BlueWhaleException("未登录!");
     }
+    public static BlueWhaleException fileUploadFail(){
+        return new BlueWhaleException("图片上传失败");
+    }
+    public static BlueWhaleException genFail(){
+        return new BlueWhaleException("生成URL失败");
+    }
 
     public static BlueWhaleException phoneOrPasswordError(){
         return new BlueWhaleException("手机号或密码错误!");

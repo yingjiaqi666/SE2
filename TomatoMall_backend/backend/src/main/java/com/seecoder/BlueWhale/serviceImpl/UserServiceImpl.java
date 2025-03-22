@@ -3,12 +3,14 @@ package com.seecoder.BlueWhale.serviceImpl;
 import com.seecoder.BlueWhale.exception.BlueWhaleException;
 import com.seecoder.BlueWhale.po.User;
 import com.seecoder.BlueWhale.repository.UserRepository;
+import com.seecoder.BlueWhale.service.ImageService;
 import com.seecoder.BlueWhale.service.UserService;
 import com.seecoder.BlueWhale.util.SecurityUtil;
 import com.seecoder.BlueWhale.util.TokenUtil;
 import com.seecoder.BlueWhale.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     SecurityUtil securityUtil;
+
+    @Autowired
+    ImageService imageService;
 
 
     @Override
@@ -72,9 +77,8 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    @Override
+
     public Boolean updateImage(String url) {
-        // TODO 可供修改
         User user=securityUtil.getCurrentUser();
         if(url!=null){
             user.setAvatar(url);
@@ -82,5 +86,12 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    public String getImage(){
+        String url = securityUtil.getCurrentUser().getAvatar();
+        return imageService.getImage(url);
+    }
+
+
 
 }

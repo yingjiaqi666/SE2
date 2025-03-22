@@ -33,13 +33,12 @@ public class UserController {
 
     @PostMapping("/update_image")
     public ResultVO<Boolean> updateImage(@RequestParam("file") MultipartFile file){
-        //TODO 将输入的文件转为url(前端传过来的应该是一个inputstream吧，我不是很确定)
         return ResultVO.buildSuccess(imageService.upload(file));
     }
 
     @GetMapping("/get_image")
     public ResultVO<String> getImage(){
-        return ResultVO.buildSuccess("");
+        return ResultVO.buildSuccess(userService.getImage());
     }
 
 

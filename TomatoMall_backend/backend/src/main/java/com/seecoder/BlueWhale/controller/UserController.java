@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/accounts")
 public class UserController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     ImageService imageService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResultVO<Boolean> register(@RequestBody UserVO userVO){
         return ResultVO.buildSuccess(userService.register(userVO));
     }
@@ -44,11 +44,11 @@ public class UserController {
 
 
     @GetMapping
-    public ResultVO<UserVO> getInformation(){
-        return ResultVO.buildSuccess(userService.getInformation());
+    public ResultVO<UserVO> getInformation(@RequestParam String username){
+        return ResultVO.buildSuccess(userService.getInformation(username));
     }
 
-    @PostMapping
+    @PutMapping
     public ResultVO<Boolean> updateInformation(@RequestBody UserVO userVO){
         return ResultVO.buildSuccess(userService.updateInformation(userVO));
     }

@@ -56,8 +56,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO getInformation() {
-        User user=securityUtil.getCurrentUser();
+    public UserVO getInformation(String username) {
+        // User user=securityUtil.getCurrentUser();
+        User user=userRepository.findByUsername(username);
         return user.toVO();
     }
 

@@ -7,7 +7,7 @@ public interface UserService {
 
     String login(String phone,String password);
 
-    UserVO getInformation();
+    UserVO getInformation(String username);
 
     Boolean updateInformation(UserVO userVO);
 

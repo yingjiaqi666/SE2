@@ -10,9 +10,6 @@ public class BlueWhaleException extends RuntimeException{
     public BlueWhaleException(String message){
         super(message);
     }
-    public static BlueWhaleException phoneAlreadyExists(){
-        return new BlueWhaleException("手机号已经存在!");
-    }
 
     public static BlueWhaleException notLogin(){
         return new BlueWhaleException("未登录!");
@@ -20,12 +17,13 @@ public class BlueWhaleException extends RuntimeException{
     public static BlueWhaleException fileUploadFail(){
         return new BlueWhaleException("图片上传失败");
     }
-    public static BlueWhaleException genFail(){
-        return new BlueWhaleException("生成URL失败");
+    public static BlueWhaleException genFail(){return new BlueWhaleException("生成URL失败");
     }
 
-    public static BlueWhaleException phoneOrPasswordError(){
-        return new BlueWhaleException("手机号或密码错误!");
+    public static BlueWhaleException LoginError(){return new BlueWhaleException("用户不存在/用户密码错误");
     }
+    public static BlueWhaleException userNameAlreadyExists(){return new BlueWhaleException("用户名已存在");}
+
+    public static BlueWhaleException userNameNotFound(){return new BlueWhaleException("用户名不存在");}
 
 }

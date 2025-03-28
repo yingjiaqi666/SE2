@@ -9,21 +9,23 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Specification {
+public class Stockpile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Integer id;
 
     @Basic
-    @Column(name = "item")
-    private String item;
+    @Column(name = "productid")
+    private String productid;
 
     @Basic
-    @Column(name = "value")
-    private String value;
+    @Column(name = "amount")
+    private int amount;
 
     @Basic
-    @Column(name = "productId")
-    private String productId;
+    @Column(name = "frozen")
+    private int frozen;
+
+    
 }

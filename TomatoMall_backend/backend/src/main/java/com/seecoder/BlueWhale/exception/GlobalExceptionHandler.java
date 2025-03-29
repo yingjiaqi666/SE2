@@ -17,6 +17,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BlueWhaleException.class)
     public ResultVO<String> handleAIExternalException(BlueWhaleException e) {
         e.printStackTrace();
-        return ResultVO.buildFailure(e.getMessage());
+        if(!e.getMessage().equals("未登录!"))
+            return ResultVO.buildFailure(e.getMessage());
+        return ResultVO.buildLoginFailure(e.getMessage());
     }
 }

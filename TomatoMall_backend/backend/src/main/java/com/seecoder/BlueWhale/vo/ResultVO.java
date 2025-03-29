@@ -27,4 +27,6 @@ public class ResultVO<T> implements Serializable {
         return new ResultVO<T>("400", msg, null);
     }
 
+    public static <T> ResultVO<T> buildLoginFailure(T result){ return new ResultVO<T>("401",null,result); }//未登录应该返回401
+
 }

@@ -21,8 +21,8 @@ public class ProductController {
         return ResultVO.buildSuccess(productService.getAll());
     }
 
-    @GetMapping
-    public ResultVO<ProductVO> getById(@RequestParam("id") String id){
+    @GetMapping("/{id}")
+    public ResultVO<ProductVO> getById(@PathVariable String id){
         int idInt = Integer.parseInt(id);
         return ResultVO.buildSuccess(productService.getById(idInt));
     }

@@ -27,11 +27,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String uri = request.getRequestURI();
-        String method = request.getMethod();
-        if ("/api/accounts".equals(uri) && "POST".equalsIgnoreCase(method)) {
-            return true;
-        }   //对注册用户特别处理
+//        String uri = request.getRequestURI();
+//        String method = request.getMethod();
+//        System.out.println("I'm here!"+" "+uri+": "+method);
+//        if ("/api/accounts".equals(uri) && "POST".equalsIgnoreCase(method)) {
+//            System.out.println("I'm here!");
+//            return true;
+//        }   //对注册用户特别处理
 
         String token = request.getHeader("token");
         if (token != null && tokenUtil.verifyToken(token)) {

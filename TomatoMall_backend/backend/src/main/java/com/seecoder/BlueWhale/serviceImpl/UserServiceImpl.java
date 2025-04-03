@@ -9,7 +9,6 @@ import com.seecoder.BlueWhale.util.SecurityUtil;
 import com.seecoder.BlueWhale.util.TokenUtil;
 import com.seecoder.BlueWhale.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,9 +34,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ImageService imageService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
 
     @Override
     public Boolean register(UserVO userVO) {
@@ -56,7 +52,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw BlueWhaleException.LoginError();
         }else {
-            if(passwordEncoder.matches(password,user.getPassword())){
+            if(!password.equals(user.getPassword())){
                 throw BlueWhaleException.LoginError();
             }
         }

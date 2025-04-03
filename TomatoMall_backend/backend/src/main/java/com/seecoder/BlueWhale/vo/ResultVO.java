@@ -17,7 +17,7 @@ public class ResultVO<T> implements Serializable {
 
     private String msg;
 
-    private T result;
+    private T data;
 
     public static <T> ResultVO<T> buildSuccess(T result) {
         return new ResultVO<T>("200", null, result);

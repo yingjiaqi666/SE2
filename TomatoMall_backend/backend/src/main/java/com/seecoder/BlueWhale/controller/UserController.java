@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResultVO<String> login(@RequestParam("username") String username, @RequestParam("password") String password){
-        return ResultVO.buildSuccess(userService.login(username, password));
+    public ResultVO<String> login(@RequestBody UserVO userVO){
+        return ResultVO.buildSuccess(userService.login(userVO.getUsername(), userVO.getPassword()));
     }
 
     @PostMapping("/update_image")
@@ -44,8 +44,8 @@ public class UserController {
     }
 
 
-    @GetMapping
-    public ResultVO<UserVO> getInformation(@RequestParam("username") String username){
+    @GetMapping("/{username}")
+    public ResultVO<UserVO> getInformation(@PathVariable String username){
         return ResultVO.buildSuccess(userService.getInformation(username));
     }
 

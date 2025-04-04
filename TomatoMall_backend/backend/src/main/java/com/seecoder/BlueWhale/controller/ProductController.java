@@ -37,19 +37,19 @@ public class ProductController {
         return ResultVO.buildSuccess(productService.addProduct(productVO));
     }
 
-    @DeleteMapping
-    public ResultVO<Boolean> deleteProduct(@RequestParam("id") String id){
+    @DeleteMapping("/{id}")
+    public ResultVO<Boolean> deleteProduct(@PathVariable String id){
         return ResultVO.buildSuccess(productService.deleteProduct(id));
     }
 
-    @PatchMapping("/stockpile")
-    public ResultVO<Boolean> changeStockpile(@RequestParam("productid") String productid ,@RequestBody int amount){
-        return ResultVO.buildSuccess(productService.changeStockpile(productid, amount));
+    @PatchMapping("/stockpile/{productId}")
+    public ResultVO<Boolean> changeStockpile(@PathVariable String productId ,@RequestBody int amount){
+        return ResultVO.buildSuccess(productService.changeStockpile(productId, amount));
     }
 
-    @GetMapping("/stockpile")
-    public ResultVO<Stockpile> getStockpile(@RequestParam("productid") String productid){
-        return ResultVO.buildSuccess(productService.getStockpile(productid));//如果productid错误则返回null
+    @GetMapping("/stockpile/{productId}")
+    public ResultVO<Stockpile> getStockpile(@PathVariable String productId){
+        return ResultVO.buildSuccess(productService.getStockpile(productId));//如果productid错误则返回null
     }
 
 }

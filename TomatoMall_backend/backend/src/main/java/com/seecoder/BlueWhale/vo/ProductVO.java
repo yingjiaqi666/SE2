@@ -32,7 +32,7 @@ public class ProductVO {
 
     private String rate;
 
-    private String discription;
+    private String description;
 
     private String cover;
 
@@ -46,7 +46,7 @@ public class ProductVO {
         product.setTitle(this.title);;
         product.setPrice(this.price);
         product.setRate(this.rate);
-        product.setDiscription(this.discription);
+        product.setDescription(this.description);
         product.setCover(this.cover);
         product.setDetail(this.detail);
         product.setSpecifications(this.specifications);

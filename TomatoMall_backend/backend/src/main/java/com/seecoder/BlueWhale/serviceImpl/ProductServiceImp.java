@@ -43,8 +43,8 @@ public class ProductServiceImp implements ProductService{
         target.setTitle(productVO.getTitle());
         target.setPrice(productVO.getPrice());
         target.setRate(productVO.getRate());
-        if(productVO.getDiscription()!=null){
-            target.setDiscription(productVO.getDiscription());
+        if(productVO.getDescription()!=null){
+            target.setDescription(productVO.getDescription());
         }
         if(productVO.getCover()!=null){
             target.setCover(productVO.getCover());

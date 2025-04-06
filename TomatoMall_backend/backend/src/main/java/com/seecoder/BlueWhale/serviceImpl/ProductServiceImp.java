@@ -61,11 +61,11 @@ public class ProductServiceImp implements ProductService{
     @Override
     public ProductVO addProduct(ProductVO productVO) {
         Product newProduct = productVO.toPO();
-        productRepository.save(newProduct);
+        Product savePO = productRepository.save(newProduct);
         Stockpile newStockpile = new Stockpile();
         newStockpile.setProductid(String.valueOf(newProduct.getId()));
         stockpileRepository.save(newStockpile);
-        return productVO;
+        return savePO.toVO();
     }
 
     @Override

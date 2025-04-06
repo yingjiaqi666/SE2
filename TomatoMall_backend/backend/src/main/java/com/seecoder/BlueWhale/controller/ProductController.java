@@ -28,8 +28,10 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResultVO<Boolean> updateProduct(@RequestBody ProductVO productVO){
-        return ResultVO.buildSuccess(productService.updateProduct(productVO));
+    public ResultVO<String> updateProduct(@RequestBody ProductVO productVO){
+        if(productService.updateProduct(productVO))
+            return ResultVO.buildSuccess("更新成功");
+        return null;
     }
 
     @PostMapping
@@ -38,13 +40,17 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResultVO<Boolean> deleteProduct(@PathVariable String id){
-        return ResultVO.buildSuccess(productService.deleteProduct(id));
+    public ResultVO<String> deleteProduct(@PathVariable String id){
+        if(productService.deleteProduct(id))
+            return ResultVO.buildSuccess("删除成功");
+        return null;
     }
 
     @PatchMapping("/stockpile/{productId}")
-    public ResultVO<Boolean> changeStockpile(@PathVariable String productId ,@RequestBody int amount){
-        return ResultVO.buildSuccess(productService.changeStockpile(productId, amount));
+    public ResultVO<String> changeStockpile(@PathVariable String productId ,@RequestBody int amount){
+        if(productService.changeStockpile(productId, amount))
+            return ResultVO.buildSuccess("调整库存成功");
+        return null;
     }
 
     @GetMapping("/stockpile/{productId}")

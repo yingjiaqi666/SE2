@@ -26,4 +26,6 @@ public class BlueWhaleException extends RuntimeException{
 
     public static BlueWhaleException userNameNotFound(){return new BlueWhaleException("用户名不存在");}
 
+    public static BlueWhaleException productNotFound(){return  new BlueWhaleException("商品不存在");}
+
 }

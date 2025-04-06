@@ -1,10 +1,9 @@
 package com.seecoder.BlueWhale.controller;
 import java.util.List;
 
-import com.seecoder.BlueWhale.vo.StockpileDTO;
+import com.seecoder.BlueWhale.vo.StockpileVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.seecoder.BlueWhale.po.Stockpile;
 import com.seecoder.BlueWhale.service.ProductService;
@@ -48,7 +47,7 @@ public class ProductController {
     }
 
     @PatchMapping("/stockpile/{productId}")
-    public ResultVO<String> changeStockpile(@PathVariable String productId ,@RequestBody StockpileDTO amount){
+    public ResultVO<String> changeStockpile(@PathVariable String productId ,@RequestBody StockpileVO amount){
         if(productService.changeStockpile(productId, amount.getAmount()))
             return ResultVO.buildSuccess("调整库存成功");
         return null;

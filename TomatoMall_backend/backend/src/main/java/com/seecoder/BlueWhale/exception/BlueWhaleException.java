@@ -28,4 +28,6 @@ public class BlueWhaleException extends RuntimeException{
 
     public static BlueWhaleException productNotFound(){return  new BlueWhaleException("商品不存在");}
 
+    public static BlueWhaleException overStock(){return new BlueWhaleException("超过库存数量");}
+
 }

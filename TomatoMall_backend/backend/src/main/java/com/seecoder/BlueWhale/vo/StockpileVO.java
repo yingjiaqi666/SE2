@@ -3,6 +3,6 @@ package com.seecoder.BlueWhale.vo;
 import lombok.Data;
 
 @Data
-public class StockpileDTO {
+public class StockpileVO {
     private Integer amount;
 }

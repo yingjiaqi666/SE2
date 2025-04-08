@@ -21,3 +21,10 @@ aliyun:
     accessKeyId:
     accessKeySecret:
     bucketName: tomatomall
+
+alipay:
+  appId: xxxx
+  appPrivateKey: 你的应用私钥
+  alipayPublicKey: 支付宝公钥
+  notifyUrl: 支付回调地址
+  serverUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do

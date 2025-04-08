@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
         User user=securityUtil.getCurrentUser();
         if(url!=null){
             user.setAvatar(url);
+            userRepository.save(user);
             return true;
         }
         return false;

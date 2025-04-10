@@ -9,6 +9,7 @@ import com.seecoder.BlueWhale.util.SecurityUtil;
 import com.seecoder.BlueWhale.util.TokenUtil;
 import com.seecoder.BlueWhale.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,12 +35,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ImageService imageService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public Boolean register(UserVO userVO) {
-        User user = userRepository.findByTelephone(userVO.getTelephone());
+        User user = userRepository.findByUsername(userVO.getUsername());
         if (user != null) {
-            throw BlueWhaleException.phoneAlreadyExists();
+            throw BlueWhaleException.userNameAlreadyExists();
         }
         User newUser = userVO.toPO();
         userRepository.save(newUser);
@@ -47,33 +51,51 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(String phone, String password) {
-        User user = userRepository.findByTelephoneAndPassword(phone, password);
+    public String login(String username, String password) {
+        User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw BlueWhaleException.phoneOrPasswordError();
+            throw BlueWhaleException.LoginError();
+        }else {
+            if(passwordEncoder.matches(password,user.getPassword())){
+                throw BlueWhaleException.LoginError();
+            }
         }
         return tokenUtil.getToken(user);
     }
 
     @Override
     public UserVO getInformation(String username) {
-        // User user=securityUtil.getCurrentUser();
         User user=userRepository.findByUsername(username);
         return user.toVO();
     }
 
     @Override
     public Boolean updateInformation(UserVO userVO) {
-        User user=securityUtil.getCurrentUser();
-        if (userVO.getPassword()!=null){
-            user.setPassword(userVO.getPassword());
+        User user=userRepository.findByUsername(userVO.getUsername());
+        if(user ==null){
+            throw BlueWhaleException.userNameNotFound();
         }
-        if (userVO.getName()!=null){
+        if(userVO.getAvatar()!=null)
+            user.setAvatar(userVO.getAvatar());
+
+        if(userVO.getName()!=null)
             user.setName(userVO.getName());
-        }
-        if (userVO.getLocation()!=null){
+
+        if(userVO.getPassword()!=null)
+            user.setPassword(userVO.getPassword());
+
+        if(userVO.getRole()!=null)
+            user.setRole(userVO.getRole());
+
+        if(userVO.getTelephone()!=null)
+            user.setTelephone(userVO.getTelephone());
+
+        if(userVO.getEmail()!=null)
+            user.setEmail(userVO.getEmail());
+
+        if(userVO.getLocation()!=null)
             user.setLocation(userVO.getLocation());
-        }
+
         userRepository.save(user);
         return true;
     }

@@ -45,7 +45,7 @@ public class Product {
     @Column(name = "detail")
     private String detail;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Specification> specifications;
 
     public ProductVO toVO(){

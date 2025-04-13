@@ -3,14 +3,6 @@ package com.seecoder.BlueWhale.vo;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-import com.seecoder.BlueWhale.enums.RoleEnum;
 import com.seecoder.BlueWhale.po.Product;
 import com.seecoder.BlueWhale.po.Specification;
 

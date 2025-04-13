@@ -23,7 +23,7 @@ public class Specification {
     @Column(name = "value")
     private String value;
 
-    @Basic
-    @Column(name = "productId")
-    private String productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id",referencedColumnName = "id") //
+    private Product product;
 }

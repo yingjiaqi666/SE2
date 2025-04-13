@@ -6,6 +6,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.seecoder.BlueWhale.exception.BlueWhaleException;
+import com.seecoder.BlueWhale.po.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class ProductServiceImp implements ProductService{
     @Override
     public ProductVO getById(int id) {
         Product product = productRepository.findById(id);
+
         if(product == null){
             throw BlueWhaleException.productNotFound();
         }
@@ -58,8 +60,13 @@ public class ProductServiceImp implements ProductService{
             target.setDetail(productVO.getDetail());
         }
         if(productVO.getSpecifications()!=null){
-            target.setSpecifications(productVO.getSpecifications());
+            target.getSpecifications().clear();
+            for (Specification spec : productVO.getSpecifications()) {
+                spec.setProduct(target);
+                target.getSpecifications().add(spec);
+            }
         }
+        productRepository.save(target);
         return true;
     }
 

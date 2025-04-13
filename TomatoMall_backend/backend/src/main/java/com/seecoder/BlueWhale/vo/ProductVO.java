@@ -1,6 +1,7 @@
 package com.seecoder.BlueWhale.vo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.seecoder.BlueWhale.po.Product;
@@ -42,6 +43,14 @@ public class ProductVO {
         product.setCover(this.cover);
         product.setDetail(this.detail);
         product.setSpecifications(this.specifications);
+
+        if (this.specifications != null) {
+            // 遍历每个 Specification 对象，并设置所属 Product
+            this.specifications.forEach(spec -> {
+                spec.setProduct(product);
+            });
+            product.setSpecifications(this.specifications);
+        }
         return product;
     }
 }

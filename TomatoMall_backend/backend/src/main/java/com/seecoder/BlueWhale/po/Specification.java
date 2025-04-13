@@ -1,4 +1,6 @@
 package com.seecoder.BlueWhale.po;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +26,12 @@ public class Specification {
     private String value;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id") //
+    @JsonIgnore
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @JsonProperty("productId")
+    public Integer getProductId() {
+        return product != null ? product.getId() : null;
+    }
 }

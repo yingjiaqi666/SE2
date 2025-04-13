@@ -48,6 +48,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Specification> specifications;
 
+
     public ProductVO toVO(){
         ProductVO productVO=new ProductVO();
         productVO.setId(this.id);

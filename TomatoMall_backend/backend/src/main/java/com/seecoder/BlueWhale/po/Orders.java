@@ -1,8 +1,7 @@
 package com.seecoder.BlueWhale.po;
 
 
-import com.seecoder.BlueWhale.vo.CartVO;
-import com.seecoder.BlueWhale.vo.OrderVO;
+import com.seecoder.BlueWhale.vo.OrdersVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Order {
+public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "orderId")
@@ -38,8 +37,8 @@ public class Order {
 
     private Integer quantity;
 
-    public OrderVO toVO(){
-        OrderVO vo = new OrderVO();
+    public OrdersVO toVO(){
+        OrdersVO vo = new OrdersVO();
         vo.setOrderId(this.orderId);
         vo.setUserId(this.userId);
         vo.setAmount(this.amount);

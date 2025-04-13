@@ -14,7 +14,7 @@ public class CartController {
     @Autowired
     CartServiceImpl cartServiceImpl;
 
-    @GetMapping
+    @PostMapping
     public ResultVO<CartVO> addIntoCart(@RequestBody CartVO cartVO){
         return ResultVO.buildSuccess(cartServiceImpl.addIntoCart(cartVO));
     }

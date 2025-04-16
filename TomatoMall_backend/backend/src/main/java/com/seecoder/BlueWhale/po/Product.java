@@ -33,8 +33,8 @@ public class Product {
     private String rate;
 
     @Basic
-    @Column(name = "discription")
-    private String discription;
+    @Column(name = "description")
+    private String description;
 
     //必须注意，在Java中用驼峰，在MySQL字段中用连字符_
     @Basic
@@ -45,8 +45,9 @@ public class Product {
     @Column(name = "detail")
     private String detail;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Specification> specifications;
+
 
     public ProductVO toVO(){
         ProductVO productVO=new ProductVO();
@@ -54,7 +55,7 @@ public class Product {
         productVO.setTitle(this.title);;
         productVO.setPrice(this.price);
         productVO.setRate(this.rate);
-        productVO.setDiscription(this.discription);
+        productVO.setDescription(this.description);
         productVO.setCover(this.cover);
         productVO.setDetail(this.detail);
         productVO.setSpecifications(this.specifications);

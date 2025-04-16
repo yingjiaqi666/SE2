@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.seecoder.BlueWhale.exception.BlueWhaleException;
+import com.seecoder.BlueWhale.po.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,12 @@ public class ProductServiceImp implements ProductService{
 
     @Override
     public ProductVO getById(int id) {
-        return productRepository.findById(id).toVO();
+        Product product = productRepository.findById(id);
+
+        if(product == null){
+            throw BlueWhaleException.productNotFound();
+        }
+        return product.toVO();
     }
 
     @Override
@@ -38,13 +45,13 @@ public class ProductServiceImp implements ProductService{
         int id = productVO.getId();
         Product target = productRepository.findById(id);
         if(target == null){
-            return false;
+            throw BlueWhaleException.productNotFound();
         }
         target.setTitle(productVO.getTitle());
         target.setPrice(productVO.getPrice());
         target.setRate(productVO.getRate());
-        if(productVO.getDiscription()!=null){
-            target.setDiscription(productVO.getDiscription());
+        if(productVO.getDescription()!=null){
+            target.setDescription(productVO.getDescription());
         }
         if(productVO.getCover()!=null){
             target.setCover(productVO.getCover());
@@ -53,26 +60,31 @@ public class ProductServiceImp implements ProductService{
             target.setDetail(productVO.getDetail());
         }
         if(productVO.getSpecifications()!=null){
-            target.setSpecifications(productVO.getSpecifications());
+            target.getSpecifications().clear();
+            for (Specification spec : productVO.getSpecifications()) {
+                spec.setProduct(target);
+                target.getSpecifications().add(spec);
+            }
         }
+        productRepository.save(target);
         return true;
     }
 
     @Override
     public ProductVO addProduct(ProductVO productVO) {
         Product newProduct = productVO.toPO();
-        productRepository.save(newProduct);
+        Product savePO = productRepository.save(newProduct);
         Stockpile newStockpile = new Stockpile();
         newStockpile.setProductid(String.valueOf(newProduct.getId()));
         stockpileRepository.save(newStockpile);
-        return productVO;
+        return savePO.toVO();
     }
 
     @Override
     public Boolean deleteProduct(String id) {
         int idInt = Integer.parseInt(id);
         if(productRepository.findById(idInt)==null){
-            return false;
+            throw BlueWhaleException.productNotFound();
         }
         stockpileRepository.deleteById(stockpileRepository.findByProductid(id).getId());
         productRepository.deleteById(idInt);
@@ -83,7 +95,7 @@ public class ProductServiceImp implements ProductService{
     public Boolean changeStockpile(String productid, int amount) {
         Stockpile target = stockpileRepository.findByProductid(productid);
         if(target==null){
-            return false;
+            throw BlueWhaleException.productNotFound();
         }
         target.setAmount(amount);
         stockpileRepository.save(target);

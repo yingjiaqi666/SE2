@@ -5,7 +5,6 @@ import com.seecoder.BlueWhale.service.UserService;
 import com.seecoder.BlueWhale.vo.ResultVO;
 import com.seecoder.BlueWhale.vo.UserVO;
 
-import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +20,17 @@ public class UserController {
     @Autowired
     ImageService imageService;
 
+
     @PostMapping
-    public ResultVO<Boolean> register(@RequestBody UserVO userVO){
-        return ResultVO.buildSuccess(userService.register(userVO));
+    public ResultVO<String> register(@RequestBody UserVO userVO){
+        if(userService.register(userVO))
+            return ResultVO.buildSuccess("注册成功");
+        return null; //一定不会到这一步，因为false就会抛出异常自动buildFailure
     }
 
     @PostMapping("/login")
-    public ResultVO<String> login(@RequestParam("phone") String phone, @RequestParam("password") String password){
-        return ResultVO.buildSuccess(userService.login(phone, password));
+    public ResultVO<String> login(@RequestBody UserVO userVO){
+        return ResultVO.buildSuccess(userService.login(userVO.getUsername(), userVO.getPassword()));
     }
 
     @PostMapping("/update_image")
@@ -42,14 +44,15 @@ public class UserController {
     }
 
 
-
-    @GetMapping
-    public ResultVO<UserVO> getInformation(@RequestParam String username){
+    @GetMapping("/{username}")
+    public ResultVO<UserVO> getInformation(@PathVariable String username){
         return ResultVO.buildSuccess(userService.getInformation(username));
     }
 
     @PutMapping
-    public ResultVO<Boolean> updateInformation(@RequestBody UserVO userVO){
-        return ResultVO.buildSuccess(userService.updateInformation(userVO));
+    public ResultVO<String> updateInformation(@RequestBody UserVO userVO){
+        if(userService.updateInformation(userVO))
+            return ResultVO.buildSuccess("更新成功");
+        return null;//不会来这一步
     }
 }

@@ -27,6 +27,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String uri = request.getRequestURI();
+        String method = request.getMethod();
+        if ("/api/accounts".equals(uri) && "POST".equalsIgnoreCase(method)) {
+            return true;
+        }   //对注册用户特别处理
+
         String token = request.getHeader("token");
         if (token != null && tokenUtil.verifyToken(token)) {
             request.getSession().setAttribute("currentUser",tokenUtil.getUser(token));

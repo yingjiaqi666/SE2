@@ -1,16 +1,9 @@
 package com.seecoder.BlueWhale.vo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-import com.seecoder.BlueWhale.enums.RoleEnum;
 import com.seecoder.BlueWhale.po.Product;
 import com.seecoder.BlueWhale.po.Specification;
 
@@ -32,7 +25,7 @@ public class ProductVO {
 
     private String rate;
 
-    private String discription;
+    private String description;
 
     private String cover;
 
@@ -46,10 +39,18 @@ public class ProductVO {
         product.setTitle(this.title);;
         product.setPrice(this.price);
         product.setRate(this.rate);
-        product.setDiscription(this.discription);
+        product.setDescription(this.description);
         product.setCover(this.cover);
         product.setDetail(this.detail);
         product.setSpecifications(this.specifications);
+
+        if (this.specifications != null) {
+            // 遍历每个 Specification 对象，并设置所属 Product
+            this.specifications.forEach(spec -> {
+                spec.setProduct(product);
+            });
+            product.setSpecifications(this.specifications);
+        }
         return product;
     }
 }

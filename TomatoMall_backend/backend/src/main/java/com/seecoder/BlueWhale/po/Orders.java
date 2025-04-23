@@ -5,6 +5,7 @@ import com.seecoder.BlueWhale.vo.OrdersVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -22,6 +23,12 @@ public class Orders {
 
     @Column(name = "userId", nullable = false)
     private Integer userId;
+
+    @Column(name = "cartItemIds")
+    private List<String> cartItemIds;
+
+    @Column(name ="shipping_address")
+    private String shipping_address;
 
     @Column(name = "amount", precision = 10, scale = 2, nullable = false)
     private BigDecimal amount;
@@ -45,6 +52,8 @@ public class Orders {
         vo.setPaymentMethod(this.paymentMethod);
         vo.setStatus(this.status);
         vo.setCreateTime(this.createTime);
+        vo.setCartItemIds(this.cartItemIds);
+        vo.setShipping_address(this.shipping_address);
         vo.setQuantity(this.quantity);
         return vo;
     }

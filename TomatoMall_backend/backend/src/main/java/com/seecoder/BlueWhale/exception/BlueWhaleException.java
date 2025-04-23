@@ -32,4 +32,5 @@ public class BlueWhaleException extends RuntimeException{
 
     public static BlueWhaleException productNotInCart(){return new BlueWhaleException("购物车商品不存在");}
 
+    public static BlueWhaleException  orderNotFound() {return new BlueWhaleException("订单不存在");}
 }

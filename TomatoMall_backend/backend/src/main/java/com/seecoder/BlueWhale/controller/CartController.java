@@ -1,12 +1,16 @@
 package com.seecoder.BlueWhale.controller;
 
 
+import com.seecoder.BlueWhale.po.Orders;
 import com.seecoder.BlueWhale.serviceImpl.CartServiceImpl;
 import com.seecoder.BlueWhale.vo.CartListVO;
 import com.seecoder.BlueWhale.vo.CartVO;
+import com.seecoder.BlueWhale.vo.OrdersVO;
 import com.seecoder.BlueWhale.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -36,6 +40,11 @@ public class CartController {
     @GetMapping
     public ResultVO<CartListVO> getList(){
         return ResultVO.buildSuccess(cartServiceImpl.getList());
+    }
+
+    @PostMapping("/checkout")
+    public ResultVO<OrdersVO> commitOrder(@RequestBody List<String> cartItemIds,@RequestParam String shipping_address,@RequestParam String payment_method){
+        return ResultVO.buildSuccess(cartServiceImpl.commitOrder(cartItemIds,shipping_address,payment_method));
     }
 
 

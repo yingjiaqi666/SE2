@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.seecoder.BlueWhale.exception.BlueWhaleException;
 import com.seecoder.BlueWhale.po.Orders;
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -35,29 +40,29 @@ public class OrderController {
     private String charset;
     @Value("${alipay.sign-type}")
     private String signType;
-    @Value("${alipay.notify-url}")
-    private String notifyUrl;
-    @Value("${alipay.return-url}")
-    private String returnUrl;
+//    @Value("${alipay.notify-url}")
+//    private String notifyUrl;
+//    @Value("${alipay.return-url}")
+//    private String returnUrl;
 
     @Autowired
     private OrdersRepository ordersRepository;
 
     @PostMapping("/{orderId}/pay")
     public ResultVO<AliForm> payOrder(@PathVariable("orderId") Integer orderId) throws AlipayApiException {
-        // 1. 查询订单
+
         Orders order = ordersRepository.findById(orderId)
                 .orElseThrow(() -> BlueWhaleException.orderNotFound());
 
-        // 2. 构建 AlipayClient
+
         AlipayClient alipayClient = new DefaultAlipayClient(
                 serverUrl, appId, privateKey, FORMAT, charset, alipayPublicKey, signType
         );
 
-        // 3. 创建支付请求
+
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-        request.setReturnUrl(returnUrl);
-        request.setNotifyUrl(notifyUrl);
+//        request.setReturnUrl(returnUrl);
+//        request.setNotifyUrl(notifyUrl);
 
         JSONObject bizContent = new JSONObject();
         bizContent.put("out_trade_no", order.getOrderId().toString());
@@ -79,5 +84,32 @@ public class OrderController {
         return ResultVO.buildSuccess(aliForm);
     }
 
-    // 回调处理方法保持不变
+    @PostMapping("/notify")  // 注意这里必须是POST接口
+    public ResultVO<String> payNotify(HttpServletRequest request) throws Exception {
+        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
+            System.out.println("=========支付宝异步回调========");
+            Map<String, String> params = new HashMap<>();
+            Map<String, String[]> requestParams = request.getParameterMap();
+            for (String name : requestParams.keySet()) {
+                params.put(name, request.getParameter(name));
+            }
+            String sign = params.get("sign");
+            String content = AlipaySignature.getSignCheckContentV1(params);
+            boolean checkSignature = AlipaySignature.rsa256CheckContent(content, sign, alipayPublicKey, "UTF-8"); // 验证签名
+
+            if (checkSignature) {
+
+                System.out.println("交易名称: " + params.get("subject"));
+                System.out.println("交易状态: " + params.get("trade_status"));
+                System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
+                System.out.println("商户订单号: " + params.get("out_trade_no"));
+                System.out.println("交易金额: " + params.get("total_amount"));
+                System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
+                System.out.println("买家付款时间: " + params.get("gmt_payment"));
+                System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
+            }
+        }
+        return ResultVO.buildSuccess("支付成功");
+    }
+
 }

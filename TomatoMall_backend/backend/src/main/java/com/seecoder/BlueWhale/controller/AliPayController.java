@@ -33,12 +33,13 @@ public class AliPayController {
     private String charset;
     @Value("${alipay.sign-type}")
     private String signType;
-    @Value("${alipay.notify-url}")
-    private String notifyUrl;
-    @Value("${alipay.return-url}")
-    private String returnUrl;
+    //    @Value("${alipay.notify-url}")
+//    private String notifyUrl;
+//    @Value("${alipay.return-url}")
+//    private String returnUrl;
     private static final String FORMAT = "JSON";
-    //vvvyyv9548@sandbox.com    支付邮箱
+
+
     @GetMapping("/pay") //subject=xxx&traceNo=xxx&totalAmount=xxx
     public void pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
         // 1. 创建Client，通用SDK提供的Client，负责调用支付宝的API
@@ -46,8 +47,8 @@ public class AliPayController {
                 privateKey, FORMAT, charset, alipayPublicKey, signType);
         // 2. 创建 Request并设置Request参数
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();  // 发送请求的 Request类
-        request.setNotifyUrl(notifyUrl);
-        request.setReturnUrl(returnUrl);
+//        request.setNotifyUrl(notifyUrl);
+//        request.setReturnUrl(returnUrl);
         JSONObject bizContent = new JSONObject();
         bizContent.put("out_trade_no", aliPay.getTraceNo());  // 我们自己生成的订单编号
         bizContent.put("total_amount", aliPay.getTotalAmount()); // 订单的总金额
@@ -66,36 +67,6 @@ public class AliPayController {
         httpResponse.getWriter().flush();
         httpResponse.getWriter().close();
     }
-    @PostMapping("/notify")  // 注意这里必须是POST接口
-    public String payNotify(HttpServletRequest request) throws Exception {
-        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
-            System.out.println("=========支付宝异步回调========");
-            Map<String, String> params = new HashMap<>();
-            Map<String, String[]> requestParams = request.getParameterMap();
-            for (String name : requestParams.keySet()) {
-                params.put(name, request.getParameter(name));
-                // System.out.println(name + " = " + request.getParameter(name));
-            }
-            String sign = params.get("sign");
-            String content = AlipaySignature.getSignCheckContentV1(params);
-            boolean checkSignature = AlipaySignature.rsa256CheckContent(content, sign, alipayPublicKey, "UTF-8"); // 验证签名
-            // 支付宝验签
-            if (checkSignature) {
-                // 验签通过 可做自己需要的操作
-                System.out.println("交易名称: " + params.get("subject"));
-                System.out.println("交易状态: " + params.get("trade_status"));
-                System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
-                System.out.println("商户订单号: " + params.get("out_trade_no"));
-                System.out.println("交易金额: " + params.get("total_amount"));
-                System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
-                System.out.println("买家付款时间: " + params.get("gmt_payment"));
-                System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
-            }
-        }
-        return "success";
-    }
-    @GetMapping("/returnUrl")
-    public String returnUrl() {
-        return "支付成功";
-    }
+
 }
+

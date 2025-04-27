@@ -24,7 +24,9 @@ public class Orders {
     @Column(name = "userId", nullable = false)
     private Integer userId;
 
-    @Column(name = "cartItemIds")
+    @ElementCollection
+    @CollectionTable(name = "order_cart_items", joinColumns = @JoinColumn(name = "order_id"))
+    @Column(name = "cart_item_ids")
     private List<String> cartItemIds;
 
     @Column(name ="shipping_address")

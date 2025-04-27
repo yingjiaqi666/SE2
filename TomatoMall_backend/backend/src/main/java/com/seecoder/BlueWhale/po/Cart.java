@@ -43,7 +43,7 @@ public class Cart {
 
     @Transient
     public String getTitle(){
-        return product != null ? getTitle(): null;
+        return product != null ? product.getTitle(): null;
     }
 
 

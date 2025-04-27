@@ -23,13 +23,13 @@ public class CartVO {
     private Integer productId;
 
     private Integer quantity;
+    private BigDecimal price;
 
     //下面为返回前端的额外信息
     private String title;
     private String description;
     private String cover;
     private String detail;
-    private BigDecimal price;
 
     public Cart toPO(){
         Cart cart = new Cart();

@@ -23,13 +23,23 @@ public class Cart {
     @Column(name = "userId")
     private Integer userId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productId", insertable = false, updatable = false)
+    private Product product;
+
     @Basic
     @Column(name = "productId")
     private Integer productId;
 
+
     @Basic
     @Column(name = "quantity")
     private Integer quantity;
+
+    @Transient
+    public BigDecimal getPrice() {
+        return product != null ? product.getPrice() : null;
+    }
 
 
     public CartVO toVO(){
@@ -38,6 +48,7 @@ public class Cart {
         vo.setUserId(this.userId);
         vo.setProductId(this.productId);
         vo.setQuantity(this.quantity);
+        vo.setPrice(this.getPrice());
         return vo;
     }
 

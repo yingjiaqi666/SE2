@@ -94,14 +94,12 @@ public class CartServiceImpl implements CartService {
         if(cartRepository.findAll().isEmpty()){
             return result;
         }
-
         List<CartVO> cartList = cartRepository.findAll().stream().map(Cart::toVO).collect(Collectors.toList());
         result.setItems(cartList);
         result.setTotal(cartList.size());
         BigDecimal total = new BigDecimal(0);
         for(CartVO cartVO : cartList){
-            Product product = productRepository.findById(cartVO.getProductId()).orElse(null);
-            total = total.add(product.getPrice().multiply(BigDecimal.valueOf(cartVO.getQuantity())));
+            total = total.add(cartVO.getPrice().multiply(BigDecimal.valueOf(cartVO.getQuantity())));
         }
         result.setTotalAmount(total);
         return result;

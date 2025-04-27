@@ -24,9 +24,9 @@ public class CartVO {
 
     private Integer quantity;
     private BigDecimal price;
-
-    //下面为返回前端的额外信息
     private String title;
+    //下面为返回前端的额外信息
+
     private String description;
     private String cover;
     private String detail;

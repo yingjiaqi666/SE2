@@ -41,6 +41,11 @@ public class Cart {
         return product != null ? product.getPrice() : null;
     }
 
+    @Transient
+    public String getTitle(){
+        return product != null ? getTitle(): null;
+    }
+
 
     public CartVO toVO(){
         CartVO vo = new CartVO();
@@ -49,6 +54,7 @@ public class Cart {
         vo.setProductId(this.productId);
         vo.setQuantity(this.quantity);
         vo.setPrice(this.getPrice());
+        vo.setTitle(this.getTitle());
         return vo;
     }
 

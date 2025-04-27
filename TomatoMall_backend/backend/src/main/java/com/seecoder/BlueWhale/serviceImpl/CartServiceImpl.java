@@ -16,6 +16,7 @@ import com.seecoder.BlueWhale.vo.CartVO;
 import com.seecoder.BlueWhale.vo.OrdersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CartServiceImpl implements CartService {
 
     @Autowired
@@ -41,6 +43,7 @@ public class CartServiceImpl implements CartService {
     @Autowired
     CartRepository cartRepository;
 
+    @Override
     public CartVO addIntoCart(CartVO cartVO){
         int productId = cartVO.getProductId();
         Integer quantity = cartVO.getQuantity();
@@ -67,6 +70,7 @@ public class CartServiceImpl implements CartService {
         return cartVO;
     }
 
+    @Override
     public boolean delete(String cartItemId){
         if(cartRepository.findByCartItemId(Integer.parseInt(cartItemId))==null)
             throw BlueWhaleException.productNotInCart();
@@ -74,6 +78,7 @@ public class CartServiceImpl implements CartService {
         return true;
     }
 
+    @Override
     public boolean update(String cartItemId, Integer quantity){
         Cart cart = cartRepository.findByCartItemId(Integer.parseInt(cartItemId));
         if(cart==null)
@@ -83,6 +88,7 @@ public class CartServiceImpl implements CartService {
         return true;
     }
 
+    @Override
     public CartListVO getList(){
         CartListVO result = new CartListVO();
         if(cartRepository.findAll().isEmpty()){
@@ -102,15 +108,15 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    @Override
     public OrdersVO commitOrder(List<String> cartItemIds, String shipping_address, String payment_method) {
-        // 1. 获取并校验购物车项
         List<Integer> ids = cartItemIds.stream().map(Integer::valueOf).collect(Collectors.toList());
         List<Cart> carts = cartRepository.findAllById(ids);
         if (carts.size() != ids.size()) {
             throw BlueWhaleException.productNotInCart();
         }
 
-        // 2. 校验库存并锁定
+
         BigDecimal totalAmount = BigDecimal.ZERO;
         int totalQuantity = 0;
         for (Cart cart : carts) {
@@ -119,7 +125,7 @@ public class CartServiceImpl implements CartService {
             if (sp.getAmount() < cart.getQuantity()) {
                 throw BlueWhaleException.overStock();
             }
-            // 锁定库存（减少可用、增加冻结）
+            // 锁定库存
             sp.setAmount(sp.getAmount() - cart.getQuantity());
             sp.setFrozen(sp.getFrozen() + cart.getQuantity());
             stockpileRepository.save(sp);
@@ -128,7 +134,6 @@ public class CartServiceImpl implements CartService {
             totalQuantity += cart.getQuantity();
         }
 
-        // 3. 创建并保存订单
         Orders order = new Orders();
         order.setUserId(securityUtil.getCurrentUser().getId());
         order.setCartItemIds(cartItemIds);
@@ -136,7 +141,6 @@ public class CartServiceImpl implements CartService {
         order.setPaymentMethod(payment_method);
         order.setAmount(totalAmount);
         order.setQuantity(totalQuantity);
-        // status 默认为 PENDING，createTime 由数据库自动设置
         order = ordersRepository.save(order);
 
         // 返回 VO

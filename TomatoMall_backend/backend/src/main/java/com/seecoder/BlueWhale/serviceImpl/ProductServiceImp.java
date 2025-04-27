@@ -16,7 +16,9 @@ import com.seecoder.BlueWhale.repository.ProductRepository;
 import com.seecoder.BlueWhale.repository.StockpileRepository;
 import com.seecoder.BlueWhale.service.ProductService;
 import com.seecoder.BlueWhale.vo.ProductVO;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class ProductServiceImp implements ProductService{
     @Autowired

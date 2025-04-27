@@ -41,8 +41,13 @@ public class Orders {
     @Column(name = "status", nullable = false, length = 20)
     private String status = "PENDING";
 
-    @Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "create_time", updatable = false)
     private LocalDateTime createTime;
+
+    @PrePersist
+    protected void onCreate() {
+        createTime = LocalDateTime.now(); // 代码层保证非空
+    }
 
     private Integer quantity;
 

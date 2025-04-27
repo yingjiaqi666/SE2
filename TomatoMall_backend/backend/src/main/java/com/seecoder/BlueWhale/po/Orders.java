@@ -1,10 +1,13 @@
 package com.seecoder.BlueWhale.po;
 
 
+import com.seecoder.BlueWhale.util.SecurityUtil;
 import com.seecoder.BlueWhale.vo.OrdersVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -48,6 +51,7 @@ public class Orders {
     protected void onCreate() {
         createTime = LocalDateTime.now(); // 代码层保证非空
     }
+
 
     private Integer quantity;
 

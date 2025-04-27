@@ -145,8 +145,11 @@ public class CartServiceImpl implements CartService {
         order.setQuantity(totalQuantity);
         order = ordersRepository.save(order);
 
+        OrdersVO temp = order.toVO();
+        temp.setUsername(securityUtil.getCurrentUser().getUsername());
+
         // 返回 VO
-        return order.toVO();
+        return temp;
     }
 
 }

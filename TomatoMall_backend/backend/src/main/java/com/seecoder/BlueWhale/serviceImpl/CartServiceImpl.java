@@ -13,6 +13,7 @@ import com.seecoder.BlueWhale.service.CartService;
 import com.seecoder.BlueWhale.util.SecurityUtil;
 import com.seecoder.BlueWhale.vo.CartListVO;
 import com.seecoder.BlueWhale.vo.CartVO;
+import com.seecoder.BlueWhale.vo.CheckoutRequest;
 import com.seecoder.BlueWhale.vo.OrdersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,7 +108,10 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public OrdersVO commitOrder(List<String> cartItemIds, String shipping_address, String payment_method) {
+    public OrdersVO commitOrder(CheckoutRequest req) {
+        List<String> cartItemIds = req.getCartItemIds();
+        CheckoutRequest.ShippingAddress shipping_address = req.getShipping_address();
+        String payment_method = req.getPayment_method();
         List<Integer> ids = cartItemIds.stream().map(Integer::valueOf).collect(Collectors.toList());
         List<Cart> carts = cartRepository.findAllById(ids);
         if (carts.size() != ids.size()) {
@@ -135,7 +139,7 @@ public class CartServiceImpl implements CartService {
         Orders order = new Orders();
         order.setUserId(securityUtil.getCurrentUser().getId());
         order.setCartItemIds(cartItemIds);
-        order.setShipping_address(shipping_address);
+        order.setShipping_address(shipping_address.getAddress());
         order.setPaymentMethod(payment_method);
         order.setAmount(totalAmount);
         order.setQuantity(totalQuantity);

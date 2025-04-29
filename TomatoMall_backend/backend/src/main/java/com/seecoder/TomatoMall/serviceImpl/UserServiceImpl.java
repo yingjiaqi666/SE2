@@ -1,6 +1,6 @@
 package com.seecoder.TomatoMall.serviceImpl;
 
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.po.User;
 import com.seecoder.TomatoMall.repository.UserRepository;
 import com.seecoder.TomatoMall.service.ImageService;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public Boolean register(UserVO userVO) {
         User user = userRepository.findByUsername(userVO.getUsername());
         if (user != null) {
-            throw BlueWhaleException.userNameAlreadyExists();
+            throw TomatoMallException.userNameAlreadyExists();
         }
         User newUser = userVO.toPO();
         userRepository.save(newUser);
@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
     public String login(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw BlueWhaleException.LoginError();
+            throw TomatoMallException.LoginError();
         }else {
             if(!password.equals(user.getPassword())){
-                throw BlueWhaleException.LoginError();
+                throw TomatoMallException.LoginError();
             }
         }
         return tokenUtil.getToken(user);
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     public Boolean updateInformation(UserVO userVO) {
         User user=userRepository.findByUsername(userVO.getUsername());
         if(user ==null){
-            throw BlueWhaleException.userNameNotFound();
+            throw TomatoMallException.userNameNotFound();
         }
         if(userVO.getAvatar()!=null)
             user.setAvatar(userVO.getAvatar());

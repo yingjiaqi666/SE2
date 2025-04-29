@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value = BlueWhaleException.class)
-    public ResultVO<String> handleAIExternalException(BlueWhaleException e) {
+    @ExceptionHandler(value = TomatoMallException.class)
+    public ResultVO<String> handleAIExternalException(TomatoMallException e) {
         e.printStackTrace();
         if(e.getMessage().equals("未登录!"))
             return ResultVO.buildLoginFailure(e.getMessage());

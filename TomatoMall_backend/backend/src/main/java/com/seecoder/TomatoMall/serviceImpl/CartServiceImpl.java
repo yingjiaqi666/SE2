@@ -1,6 +1,6 @@
 package com.seecoder.TomatoMall.serviceImpl;
 
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.po.Cart;
 import com.seecoder.TomatoMall.po.Orders;
 import com.seecoder.TomatoMall.po.Product;
@@ -47,13 +47,13 @@ public class CartServiceImpl implements CartService {
         int productId = cartVO.getProductId();
         Integer quantity = cartVO.getQuantity();
         if(productRepository.findById(productId) == null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
 
         Product product = productRepository.findById(productId);
         Stockpile stockpile = stockpileRepository.findByProductid(String.valueOf(productId));
         if(quantity>stockpile.getAmount()){
-            throw BlueWhaleException.overStock();
+            throw TomatoMallException.overStock();
         }
         else {
             Cart savedCart = cartVO.toPO();
@@ -72,7 +72,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean delete(String cartItemId){
         if(cartRepository.findByCartItemId(Integer.parseInt(cartItemId))==null)
-            throw BlueWhaleException.productNotInCart();
+            throw TomatoMallException.productNotInCart();
         cartRepository.deleteCartByCartItemId(Integer.parseInt(cartItemId));
         return true;
     }
@@ -81,7 +81,7 @@ public class CartServiceImpl implements CartService {
     public boolean update(String cartItemId, Integer quantity){
         Cart cart = cartRepository.findByCartItemId(Integer.parseInt(cartItemId));
         if(cart==null)
-            throw BlueWhaleException.productNotInCart();
+            throw TomatoMallException.productNotInCart();
         cart.setQuantity(quantity);
         cartRepository.save(cart);
         return true;
@@ -113,7 +113,7 @@ public class CartServiceImpl implements CartService {
         List<Integer> ids = cartItemIds.stream().map(Integer::valueOf).collect(Collectors.toList());
         List<Cart> carts = cartRepository.findAllById(ids);
         if (carts.size() != ids.size()) {
-            throw BlueWhaleException.productNotInCart();
+            throw TomatoMallException.productNotInCart();
         }
 
 
@@ -123,7 +123,7 @@ public class CartServiceImpl implements CartService {
             Stockpile sp = stockpileRepository.findByProductid(String.valueOf(cart.getProductId()));
             Product product = productRepository.findById(Integer.parseInt(String.valueOf(cart.getProductId())));
             if (sp.getAmount() < cart.getQuantity()) {
-                throw BlueWhaleException.overStock();
+                throw TomatoMallException.overStock();
             }
             // 锁定库存
             sp.setAmount(sp.getAmount() - cart.getQuantity());

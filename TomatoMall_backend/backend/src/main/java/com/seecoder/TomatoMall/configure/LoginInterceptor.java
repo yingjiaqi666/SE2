@@ -1,6 +1,6 @@
 package com.seecoder.TomatoMall.configure;
 
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             request.getSession().setAttribute("currentUser",tokenUtil.getUser(token));
             return true;
         }else {
-            throw BlueWhaleException.notLogin();
+            throw TomatoMallException.notLogin();
         }
     }
 

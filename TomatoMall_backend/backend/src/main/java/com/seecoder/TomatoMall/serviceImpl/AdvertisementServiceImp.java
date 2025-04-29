@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.po.Advertisement;
 import com.seecoder.TomatoMall.repository.AdvertisementRepository;
 import com.seecoder.TomatoMall.repository.ProductRepository;
@@ -32,7 +32,7 @@ public class AdvertisementServiceImp implements AdvertisementService{
         int id = advertisementVO.getId();
         Advertisement target = advertisementRepository.findById(id);
         if(target == null||productRepository.findById(advertisementVO.getProductId())==null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         target.setProductId(advertisementVO.getProductId());
         if(advertisementVO.getContent()!=null){
@@ -51,7 +51,7 @@ public class AdvertisementServiceImp implements AdvertisementService{
     @Override
     public AdvertisementVO addAdvertisement(AdvertisementVO advertisementVO) {
         if(productRepository.findById(advertisementVO.getProductId())==null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         Advertisement newAdvertisement = advertisementVO.toPO();
         Advertisement savePO = advertisementRepository.save(newAdvertisement);
@@ -61,7 +61,7 @@ public class AdvertisementServiceImp implements AdvertisementService{
     @Override
     public Boolean deleteAdvertisement(int id) {
         if(advertisementRepository.findById(id)==null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         advertisementRepository.deleteById(id);
         return true;

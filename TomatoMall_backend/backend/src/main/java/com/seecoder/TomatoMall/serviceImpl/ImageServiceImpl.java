@@ -6,7 +6,7 @@ import com.seecoder.TomatoMall.util.OssUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 @Service
 public class ImageServiceImpl implements ImageService {
 
@@ -22,7 +22,7 @@ public class ImageServiceImpl implements ImageService {
             String url = ossUtil.upload(file.getOriginalFilename(),file.getInputStream());
             return userService.updateImage(url);
         }catch (Exception e){
-            throw BlueWhaleException.fileUploadFail();
+            throw TomatoMallException.fileUploadFail();
         }
     }
 
@@ -31,7 +31,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             return ossUtil.generatePresignedUrl(object);
         }catch (Exception e){
-            throw BlueWhaleException.genFail();
+            throw TomatoMallException.genFail();
         }
     }
 

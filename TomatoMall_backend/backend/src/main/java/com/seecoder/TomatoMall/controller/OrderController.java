@@ -7,7 +7,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.po.Orders;
 import com.seecoder.TomatoMall.repository.OrdersRepository;
 import com.seecoder.TomatoMall.vo.AliForm;
@@ -52,7 +52,7 @@ public class OrderController {
     public ResultVO<AliForm> payOrder(@PathVariable("orderId") Integer orderId) throws AlipayApiException {
 
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> BlueWhaleException.orderNotFound());
+                .orElseThrow(() -> TomatoMallException.orderNotFound());
 
 
         AlipayClient alipayClient = new DefaultAlipayClient(

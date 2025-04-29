@@ -3,7 +3,7 @@ package com.seecoder.TomatoMall.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.seecoder.TomatoMall.exception.BlueWhaleException;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.po.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class ProductServiceImp implements ProductService{
         Product product = productRepository.findById(id);
 
         if(product == null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         return product.toVO();
     }
@@ -45,7 +45,7 @@ public class ProductServiceImp implements ProductService{
         int id = productVO.getId();
         Product target = productRepository.findById(id);
         if(target == null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         target.setTitle(productVO.getTitle());
         target.setPrice(productVO.getPrice());
@@ -84,7 +84,7 @@ public class ProductServiceImp implements ProductService{
     public Boolean deleteProduct(String id) {
         int idInt = Integer.parseInt(id);
         if(productRepository.findById(idInt)==null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         stockpileRepository.deleteById(stockpileRepository.findByProductid(id).getId());
         productRepository.deleteById(idInt);
@@ -95,7 +95,7 @@ public class ProductServiceImp implements ProductService{
     public Boolean changeStockpile(String productid, int amount) {
         Stockpile target = stockpileRepository.findByProductid(productid);
         if(target==null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         target.setAmount(amount);
         stockpileRepository.save(target);

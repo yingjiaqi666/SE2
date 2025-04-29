@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.seecoder</groupId>
-	<artifactId>BlueWhale</artifactId>
+	<artifactId>TomatoMall</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BlueWhale</name>
+	<name>TomatoMall</name>
 	<description>2024年软工二大作业</description>
 	<properties>
 		<java.version>8</java.version>

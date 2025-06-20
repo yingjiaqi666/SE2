@@ -29,10 +29,10 @@ public class AliPayController {
     private String charset;
     @Value("${alipay.sign-type}")
     private String signType;
-    //    @Value("${alipay.notify-url}")
-//    private String notifyUrl;
-//    @Value("${alipay.return-url}")
-//    private String returnUrl;
+    @Value("${alipay.notify-url}")
+    private String notifyUrl;
+    @Value("${alipay.return-url}")
+    private String returnUrl;
     private static final String FORMAT = "JSON";
 
 
@@ -43,8 +43,8 @@ public class AliPayController {
                 privateKey, FORMAT, charset, alipayPublicKey, signType);
         // 2. 创建 Request并设置Request参数
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();  // 发送请求的 Request类
-//        request.setNotifyUrl(notifyUrl);
-//        request.setReturnUrl(returnUrl);
+        request.setNotifyUrl(notifyUrl);
+        request.setReturnUrl(returnUrl);
         JSONObject bizContent = new JSONObject();
         bizContent.put("out_trade_no", aliPay.getTraceNo());  // 我们自己生成的订单编号
         bizContent.put("total_amount", aliPay.getTotalAmount()); // 订单的总金额

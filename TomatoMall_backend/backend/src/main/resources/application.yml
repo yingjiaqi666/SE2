@@ -29,3 +29,5 @@ alipay:
   charset: utf-8
   sign-type: RSA2
   server-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  notify-url: http://localhost:5173/cart
+  return-url: http://null

@@ -28,6 +28,9 @@ public class BlueWhaleException extends RuntimeException{
 
     public static BlueWhaleException productNotFound(){return  new BlueWhaleException("商品不存在");}
 
+    public static BlueWhaleException tagNotFound(){return  new BlueWhaleException("Id不存在");}
+    public static BlueWhaleException tagNameAlreadyExists(){return new BlueWhaleException("tag已存在");}
+
     public static BlueWhaleException overStock(){return new BlueWhaleException("超过库存数量");}
 
     public static BlueWhaleException productNotInCart(){return new BlueWhaleException("购物车商品不存在");}

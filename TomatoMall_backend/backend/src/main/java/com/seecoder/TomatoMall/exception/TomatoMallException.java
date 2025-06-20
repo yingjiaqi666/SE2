@@ -33,4 +33,6 @@ public class TomatoMallException extends RuntimeException{
     public static TomatoMallException productNotInCart(){return new TomatoMallException("购物车商品不存在");}
 
     public static TomatoMallException orderNotFound() {return new TomatoMallException("订单不存在");}
+
+    public static TomatoMallException unpaidOrderOversized() {return new TomatoMallException("未支付订单过多");}
 }

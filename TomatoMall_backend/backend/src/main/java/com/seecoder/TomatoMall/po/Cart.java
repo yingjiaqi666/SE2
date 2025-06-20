@@ -31,7 +31,6 @@ public class Cart {
     @Column(name = "productId")
     private Integer productId;
 
-
     @Basic
     @Column(name = "quantity")
     private Integer quantity;

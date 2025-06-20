@@ -9,7 +9,10 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.seecoder.TomatoMall.exception.TomatoMallException;
 import com.seecoder.TomatoMall.po.Orders;
+import com.seecoder.TomatoMall.po.Stockpile;
+import com.seecoder.TomatoMall.repository.CartRepository;
 import com.seecoder.TomatoMall.repository.OrdersRepository;
+import com.seecoder.TomatoMall.repository.StockpileRepository;
 import com.seecoder.TomatoMall.util.AliPay;
 import com.seecoder.TomatoMall.vo.AliForm;
 import com.seecoder.TomatoMall.vo.ResultVO;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -44,6 +48,12 @@ public class OrderController {
 
     @Autowired
     private OrdersRepository ordersRepository;
+
+    @Autowired
+    private StockpileRepository stockpileRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 
 
 
@@ -88,7 +98,6 @@ public class OrderController {
         Map<String, String> params = AliPay.extractParams(request);
         boolean ok = AliPay.verifySignature(params, alipayPublicKey, charset, signType);
         if (ok) {
-
             return "redirect:http://127.0.0.1:5173/cart";
         } else {
             return "redirect:http://127.0.0.1:5173/cart?payResult=fail";
@@ -102,9 +111,25 @@ public class OrderController {
         boolean ok = AliPay.verifySignature(params, alipayPublicKey, charset, signType);
         if (ok && "TRADE_SUCCESS".equals(params.get("trade_status"))) {
             String outTradeNo = params.get("out_trade_no");
-            String totalAmount = params.get("total_amount");
-            // TODO: 根据 outTradeNo 查订单 → 校验金额 → 更新订单状态
-            return "success";  // 千万要返回 success
+            Orders order = ordersRepository.findByOrderId(Integer.valueOf(outTradeNo))
+                    .orElseThrow(() -> TomatoMallException.orderNotFound());
+
+            // 根据 outTradeNo 查订单 → 更新订单状态
+
+            order.setStatus("PAID");
+            ordersRepository.save(order);
+
+            List<String> cartItemIds = order.getCartItemIds();
+            for (String cartIdStr : cartItemIds) {
+                int productId = cartRepository.findByCartItemId(Integer.valueOf(cartIdStr))
+                        .getProductId();
+                Stockpile sp = stockpileRepository.findByProductid(String.valueOf(productId));
+                int locked = cartRepository.findByCartItemId(Integer.valueOf(cartIdStr)).getQuantity();
+                sp.setFrozen(sp.getFrozen() - locked);
+                stockpileRepository.save(sp);
+
+                return "success";
+            }
         }
         return "failure";
     }

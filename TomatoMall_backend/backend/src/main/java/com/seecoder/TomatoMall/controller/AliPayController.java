@@ -9,6 +9,7 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 
 import com.seecoder.TomatoMall.util.AliPay;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/alipay")
 public class AliPayController {
     @Value("${alipay.app-id}")
@@ -76,12 +77,9 @@ public class AliPayController {
         if (ok) {
             // 支付成功，跳转到你购物车页面也可以，但用户看不出“支付结果”
             // 方式一：直接返回前端路由，假设你前端路由是 /cart
-            return "redirect:/localhost:5173/cart";
-            // 方式二（推荐）：跳到一个专门的结果展示页面
-            // return "pay_success";
+            return "redirect:http://localhost:5173/cart";
         } else {
-            return "redirect:/cart?payResult=fail";
-            // 或者 return "pay_fail";
+            return "redirect:http://localhost:5173/cart?payResult=fail";
         }
     }
 

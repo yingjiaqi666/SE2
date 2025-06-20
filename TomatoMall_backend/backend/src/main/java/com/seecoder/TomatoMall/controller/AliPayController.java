@@ -4,17 +4,23 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 
 import com.seecoder.TomatoMall.util.AliPay;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/alipay")
 public class AliPayController {
     @Value("${alipay.app-id}")
@@ -36,7 +42,7 @@ public class AliPayController {
     private static final String FORMAT = "JSON";
 
 
-    @GetMapping("/pay") //subject=xxx&traceNo=xxx&totalAmount=xxx
+    @GetMapping("/pay")
     public void pay(AliPay aliPay, HttpServletResponse httpResponse) throws Exception {
         // 1. 创建Client，通用SDK提供的Client，负责调用支付宝的API
         AlipayClient alipayClient = new DefaultAlipayClient(serverUrl, appId,
@@ -63,6 +69,34 @@ public class AliPayController {
         httpResponse.getWriter().flush();
         httpResponse.getWriter().close();
     }
+
+    @GetMapping("/return")
+    public String returnUrl(HttpServletRequest request) throws AlipayApiException {
+        Map<String, String> params = AliPay.extractParams(request);
+        boolean ok = AliPay.verifySignature(params, alipayPublicKey, charset, signType);
+        if (ok) {
+            // 支付成功，跳转到你购物车页面也可以，但用户看不出“支付结果”
+            // 方式一：直接返回前端路由，假设你前端路由是 /cart
+            return "redirect:http://localhost:5173/cart";
+        } else {
+            return "redirect:http://localhost:5173/cart?payResult=fail";
+        }
+    }
+
+    // 支付宝服务器后台调用这里，做业务更新，一定要返回 "success"
+    @PostMapping("/notify")
+    public String notifyUrl(HttpServletRequest request) throws AlipayApiException {
+        Map<String, String> params = AliPay.extractParams(request);
+        boolean ok = AliPay.verifySignature(params, alipayPublicKey, charset, signType);
+        if (ok && "TRADE_SUCCESS".equals(params.get("trade_status"))) {
+            String outTradeNo = params.get("out_trade_no");
+            String totalAmount = params.get("total_amount");
+            // TODO: 根据 outTradeNo 查订单 → 校验金额 → 更新订单状态
+            return "success";  // 千万要返回 success
+        }
+        return "failure";
+    }
+
 
 }
 

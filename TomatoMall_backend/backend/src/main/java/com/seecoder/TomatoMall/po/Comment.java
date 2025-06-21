@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 
 import com.seecoder.TomatoMall.exception.TomatoMallException;
-import com.seecoder.TomatoMall.serviceImpl.ProductServiceImp;
+import com.seecoder.TomatoMall.serviceImpl.ProductServiceImpl;
 import com.seecoder.TomatoMall.vo.CommentVO;
 import com.seecoder.TomatoMall.vo.ProductVO;
 
@@ -46,7 +46,7 @@ public class Comment {
     private Integer userId;
 
     public CommentVO toVO(){
-        ProductServiceImp productService = new ProductServiceImp();
+        ProductServiceImpl productService = new ProductServiceImpl();
         CommentVO vo = new CommentVO();
         ProductVO book = productService.getById(this.bookId);
         if(book == null){

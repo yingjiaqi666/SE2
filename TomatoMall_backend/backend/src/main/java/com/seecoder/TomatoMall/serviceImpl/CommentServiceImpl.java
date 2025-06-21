@@ -13,14 +13,14 @@ import com.seecoder.TomatoMall.service.CommentService;
 import com.seecoder.TomatoMall.vo.CommentVO;
 
 @Service
-public class CommentServiceImp implements CommentService{
+public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private CommentRepository commentRepository;
 
     @Override
     public List<CommentVO> getAll() {
-        return commentRepository.findByFatherId(null).stream().map(Comment::toVO).collect(Collectors.toList());
+        return commentRepository.findAllFatherIdIsNull().stream().map(Comment::toVO).collect(Collectors.toList());
     }
 
     @Override

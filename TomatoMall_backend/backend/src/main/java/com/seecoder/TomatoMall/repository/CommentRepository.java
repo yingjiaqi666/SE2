@@ -8,6 +8,7 @@ import com.seecoder.TomatoMall.po.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer>{
     List<Comment> findByFatherId(String fatherId);
+    List<Comment> findAllFatherIdIsNull();
     Comment findById(int id);
     List<Comment> findByBookId(int bookId);
 }

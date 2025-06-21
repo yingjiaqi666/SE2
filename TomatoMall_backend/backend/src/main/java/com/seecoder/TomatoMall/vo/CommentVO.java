@@ -1,5 +1,6 @@
 package com.seecoder.TomatoMall.vo;
 
+import java.time.LocalDateTime;
 import java.util.TimeZone;
 
 import com.seecoder.TomatoMall.po.Comment;
@@ -19,7 +20,7 @@ public class CommentVO {
     private String commentTitle;
     private String fatherId;
     private Integer userId;
-    private TimeZone time;
+    private LocalDateTime time;
     private String bookTitle;
     private String cover;
 

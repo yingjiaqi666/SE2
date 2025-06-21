@@ -14,6 +14,8 @@ import com.seecoder.TomatoMall.serviceImpl.ProductServiceImpl;
 import com.seecoder.TomatoMall.vo.CommentVO;
 import com.seecoder.TomatoMall.vo.ProductVO;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -45,21 +47,24 @@ public class Comment {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(name = "create_time", updatable = false)
+    private LocalDateTime time;
+
+    @PrePersist
+    protected void onCreate() {
+        time = LocalDateTime.now(); // 代码层保证非空
+    }
+
+
     public CommentVO toVO(){
-        ProductServiceImpl productService = new ProductServiceImpl();
         CommentVO vo = new CommentVO();
-        ProductVO book = productService.getById(this.bookId);
-        if(book == null){
-            throw TomatoMallException.productNotFound();
-        }
         vo.setId(this.id);
         vo.setBookId(this.bookId);
         vo.setComment(this.comment);
         vo.setCommentTitle(this.commentTitle);
         vo.setFatherId(this.fatherId);
         vo.setUserId(this.userId);
-        vo.setBookTitle(book.getTitle());
-        vo.setCover(book.getCover());
+        vo.setTime(this.time);
         return vo;
     }
 

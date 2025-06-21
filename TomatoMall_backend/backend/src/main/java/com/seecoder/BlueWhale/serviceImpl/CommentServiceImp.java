@@ -20,7 +20,7 @@ public class CommentServiceImp implements CommentService{
 
     @Override
     public List<CommentVO> getAll() {
-        return commentRepository.findByFatherId("").stream().map(Comment::toVO).collect(Collectors.toList());
+        return commentRepository.findByFatherId(null).stream().map(Comment::toVO).collect(Collectors.toList());
     }
 
     @Override

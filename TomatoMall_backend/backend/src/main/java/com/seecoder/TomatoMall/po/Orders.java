@@ -50,7 +50,6 @@ public class Orders {
         createTime = LocalDateTime.now(); // 代码层保证非空
     }
 
-
     private Integer quantity;
 
     public OrdersVO toVO(){

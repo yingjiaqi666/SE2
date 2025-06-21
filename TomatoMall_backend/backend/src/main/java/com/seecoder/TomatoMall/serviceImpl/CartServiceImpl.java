@@ -1,10 +1,7 @@
 package com.seecoder.TomatoMall.serviceImpl;
 
 import com.seecoder.TomatoMall.exception.TomatoMallException;
-import com.seecoder.TomatoMall.po.Cart;
-import com.seecoder.TomatoMall.po.Orders;
-import com.seecoder.TomatoMall.po.Product;
-import com.seecoder.TomatoMall.po.Stockpile;
+import com.seecoder.TomatoMall.po.*;
 import com.seecoder.TomatoMall.repository.CartRepository;
 import com.seecoder.TomatoMall.repository.OrdersRepository;
 import com.seecoder.TomatoMall.repository.ProductRepository;
@@ -107,6 +104,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public OrdersVO commitOrder(CheckoutRequest req) {
+        User user = securityUtil.getCurrentUser();
+        Integer userId = securityUtil.getCurrentUser().getId();
+
+        long pendingCount = ordersRepository.countByUserIdAndStatus(userId, "PENDING");
+        if (pendingCount >= 3) {
+            throw TomatoMallException.unpaidOrderOversized();
+        }
+
         List<String> cartItemIds = req.getCartItemIds();
         CheckoutRequest.ShippingAddress shipping_address = req.getShipping_address();
         String payment_method = req.getPayment_method();
@@ -135,7 +140,7 @@ public class CartServiceImpl implements CartService {
         }
 
         Orders order = new Orders();
-        order.setUserId(securityUtil.getCurrentUser().getId());
+        order.setUserId(userId);
         order.setCartItemIds(cartItemIds);
         order.setShipping_address(shipping_address.getAddress());
         order.setPaymentMethod(payment_method);
@@ -144,7 +149,7 @@ public class CartServiceImpl implements CartService {
         order = ordersRepository.save(order);
 
         OrdersVO temp = order.toVO();
-        temp.setUsername(securityUtil.getCurrentUser().getUsername());
+        temp.setUsername(user.getUsername());
 
         // 返回 VO
         return temp;

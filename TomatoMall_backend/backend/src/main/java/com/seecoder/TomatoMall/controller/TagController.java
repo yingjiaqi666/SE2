@@ -1,5 +1,5 @@
 package com.seecoder.TomatoMall.controller;
-import java.util.List;
+import java.util.*;
 
 import com.seecoder.TomatoMall.vo.TagVO;
 
@@ -60,16 +60,26 @@ public class TagController {
         return ResultVO.buildFailure("tag不存在");
     }
 
-    @GetMapping("/tag/books/{tagId}")
-    public ResultVO<List<String>> getBooks(@PathVariable String tagId){
-        return ResultVO.buildSuccess(tagService.getBooks(tagId));
+    @GetMapping("/tag/books")
+    public ResultVO<List<String>> getBooksByTags(@RequestParam List<String> tagIds) {
+        Map<String, Integer> bookMatchCount = new HashMap<>();
+        for (String tagId : tagIds) {
+            List<String> booksForTag = tagService.getBooks(tagId);
+            for (String bookId : booksForTag) {
+                bookMatchCount.put(bookId, bookMatchCount.getOrDefault(bookId, 0) + 1);
+            }
+        }
+        List<String> sortedBookIds = new ArrayList<>(bookMatchCount.keySet());
+        sortedBookIds.sort((a, b) -> {
+            int countA = bookMatchCount.get(a);
+            int countB = bookMatchCount.get(b);
+            return Integer.compare(countB, countA);
+        });
+        return ResultVO.buildSuccess(sortedBookIds);
     }
-
     @GetMapping("/tag/product/{productId}")
     public ResultVO<List<Integer>> getTagsOfBook(@PathVariable String productId){
         return ResultVO.buildSuccess(tagService.getTagsOfBook(productId));//如果Tagid错误则返回null
     }
-
-
 
 }

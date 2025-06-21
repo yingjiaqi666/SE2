@@ -104,7 +104,7 @@
       <workItem from="1746671001772" duration="85000" />
       <workItem from="1750389044395" duration="10300000" />
       <workItem from="1750487326162" duration="306000" />
-      <workItem from="1750487694161" duration="20318000" />
+      <workItem from="1750487694161" duration="35211000" />
     </task>
     <task id="LOCAL-00001" summary="nothing">
       <option name="closed" value="true" />
@@ -131,7 +131,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="xzy" />
+                        <option value="origin/xzy" />
                       </list>
                     </value>
                   </entry>

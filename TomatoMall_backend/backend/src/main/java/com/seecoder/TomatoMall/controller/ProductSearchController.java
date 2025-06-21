@@ -3,6 +3,7 @@ package com.seecoder.TomatoMall.controller;
 import com.seecoder.TomatoMall.service.ProductSearchService;
 import com.seecoder.TomatoMall.vo.ProductSearchDTO;
 import com.seecoder.TomatoMall.vo.ProductSimilarityVO;
+import com.seecoder.TomatoMall.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class ProductSearchController {
     private ProductSearchService searchService;
 
     @PostMapping
-    public List<ProductSimilarityVO> search(@RequestBody ProductSearchDTO dto) {
-        return searchService.fuzzySearchWithSimilarity(dto);
+    public ResultVO<List<ProductSimilarityVO>> search(@RequestBody ProductSearchDTO dto) {
+        return ResultVO.buildSuccess(searchService.fuzzySearchWithSimilarity(dto));
     }
 }

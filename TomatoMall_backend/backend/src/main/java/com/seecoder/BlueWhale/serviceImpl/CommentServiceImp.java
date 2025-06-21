@@ -20,7 +20,7 @@ public class CommentServiceImp implements CommentService{
 
     @Override
     public List<CommentVO> getAll() {
-        return commentRepository.findByFatherId(null).stream().map(Comment::toVO).collect(Collectors.toList());
+        return commentRepository.findByFatherId("").stream().map(Comment::toVO).collect(Collectors.toList());
     }
 
     @Override
@@ -33,15 +33,15 @@ public class CommentServiceImp implements CommentService{
     }
 
     @Override
-    public CommentVO addComment(CommentVO commentVO) {
-        if(commentVO.getFatherId()!=null){
-            Comment comment = commentRepository.findById(Integer.parseInt(commentVO.getFatherId()));
-            if(comment == null){
+    public CommentVO addComment(Comment comment) {
+        if(comment.getFatherId()!=null){
+            Comment father = commentRepository.findById(Integer.parseInt(comment.getFatherId()));
+            if(father == null){
                 throw BlueWhaleException.commentNotFound();
             }
         }
-        commentRepository.save(commentVO.toPO());
-        return commentVO;
+        commentRepository.save(comment);
+        return comment.toVO();
     }
 
     @Override

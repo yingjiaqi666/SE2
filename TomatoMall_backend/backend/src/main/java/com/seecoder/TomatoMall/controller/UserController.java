@@ -17,10 +17,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    ImageService imageService;
-
-
     @PostMapping
     public ResultVO<String> register(@RequestBody UserVO userVO){
         if(userService.register(userVO))
@@ -30,7 +26,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResultVO<String> login(@RequestBody UserVO userVO){
-        System.out.println("here:"+userVO);
         return ResultVO.buildSuccess(userService.login(userVO.getUsername(), userVO.getPassword()));
     }
 

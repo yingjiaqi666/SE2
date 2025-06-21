@@ -54,8 +54,8 @@ public class CartServiceImpl implements CartService {
         }
         else {
             // 检查是否已存在相同商品
-            Cart existingCart = cartRepository.findByProductIdAndUserId(productId, securityUtil.getCurrentUser().getId());
-            if (existingCart != null && existingCart.getCommited().equals("false")) {
+            Cart existingCart = cartRepository.findByProductIdAndUserIdAndCommited(productId, securityUtil.getCurrentUser().getId(),"false");
+            if (existingCart != null) {
                 // 如果已存在，更新数量
                 existingCart.setQuantity(existingCart.getQuantity() + quantity);
                 cartRepository.save(existingCart);

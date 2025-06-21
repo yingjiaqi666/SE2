@@ -25,17 +25,13 @@ public class UserController {
     public ResultVO<String> register(@RequestBody UserVO userVO){
         if(userService.register(userVO))
             return ResultVO.buildSuccess("注册成功");
-        return null; //一定不会到这一步，因为false就会抛出异常自动buildFailure
+        return null;
     }
 
     @PostMapping("/login")
     public ResultVO<String> login(@RequestBody UserVO userVO){
+        System.out.println("here:"+userVO);
         return ResultVO.buildSuccess(userService.login(userVO.getUsername(), userVO.getPassword()));
-    }
-
-    @PostMapping("/update_image")
-    public ResultVO<Boolean> updateImage(@RequestParam("file") MultipartFile file){
-        return ResultVO.buildSuccess(imageService.upload(file));
     }
 
     @GetMapping("/get_image")

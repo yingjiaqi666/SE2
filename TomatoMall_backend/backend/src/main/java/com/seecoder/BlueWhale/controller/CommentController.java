@@ -1,4 +1,5 @@
 package com.seecoder.BlueWhale.controller;
+import com.seecoder.BlueWhale.po.Comment;
 import com.seecoder.BlueWhale.service.CommentService;
 import com.seecoder.BlueWhale.vo.CommentVO;
 import com.seecoder.BlueWhale.vo.ResultVO;
@@ -26,8 +27,8 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResultVO<CommentVO> addComment(@RequestBody CommentVO commentVO){
-        return ResultVO.buildSuccess(commentService.addComment(commentVO));
+    public ResultVO<CommentVO> addComment(@RequestBody Comment comment){
+        return ResultVO.buildSuccess(commentService.addComment(comment));
     }
 
     @DeleteMapping("/{id}")

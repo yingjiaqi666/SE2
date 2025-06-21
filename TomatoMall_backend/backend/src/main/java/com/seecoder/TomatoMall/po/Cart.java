@@ -35,6 +35,10 @@ public class Cart {
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Basic
+    @Column(name = "commited")
+    private String commited = "false"; // 是否提交订单，默认未提交
+
     @Transient
     public BigDecimal getPrice() {
         return product != null ? product.getPrice() : null;
@@ -54,6 +58,7 @@ public class Cart {
         vo.setQuantity(this.quantity);
         vo.setPrice(this.getPrice());
         vo.setTitle(this.getTitle());
+        vo.setCommited(this.commited);
         return vo;
     }
 

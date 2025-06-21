@@ -24,6 +24,8 @@ public class OrdersVO {
     private Integer quantity;
     private String username;
 
+    private List<Goods> goodsList;
+
     public Orders toPO(){
         Orders orders = new Orders();
         orders.setOrderId(this.orderId);

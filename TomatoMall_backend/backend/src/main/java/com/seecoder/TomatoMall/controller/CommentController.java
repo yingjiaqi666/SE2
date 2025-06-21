@@ -39,8 +39,6 @@ public class CommentController {
         }
     }
 
-
-
     //search
 
     @GetMapping("/book/{id}")

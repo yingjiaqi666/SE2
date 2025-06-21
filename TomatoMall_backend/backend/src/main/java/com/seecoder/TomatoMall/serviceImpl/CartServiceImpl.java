@@ -55,7 +55,7 @@ public class CartServiceImpl implements CartService {
         else {
             // 检查是否已存在相同商品
             Cart existingCart = cartRepository.findByProductIdAndUserId(productId, securityUtil.getCurrentUser().getId());
-            if (existingCart != null) {
+            if (existingCart != null && existingCart.getCommited().equals("false")) {
                 // 如果已存在，更新数量
                 existingCart.setQuantity(existingCart.getQuantity() + quantity);
                 cartRepository.save(existingCart);
@@ -138,17 +138,22 @@ public class CartServiceImpl implements CartService {
         int totalQuantity = 0;
         for (Cart cart : carts) {
             Stockpile sp = stockpileRepository.findByProductid(String.valueOf(cart.getProductId()));
-            Product product = productRepository.findById(Integer.parseInt(String.valueOf(cart.getProductId())));
             if (sp.getAmount() < cart.getQuantity()) {
                 throw TomatoMallException.overStock();
             }
-            // 锁定库存
+        }
+        // 锁定库存
+        for (Cart cart : carts) {
+            Stockpile sp = stockpileRepository.findByProductid(String.valueOf(cart.getProductId()));
+            Product product = productRepository.findById(Integer.parseInt(String.valueOf(cart.getProductId())));
             sp.setAmount(sp.getAmount() - cart.getQuantity());
             sp.setFrozen(sp.getFrozen() + cart.getQuantity());
             stockpileRepository.save(sp);
 
             totalAmount = totalAmount.add(product.getPrice().multiply(BigDecimal.valueOf(cart.getQuantity())));
             totalQuantity += cart.getQuantity();
+            cart.setCommited("true");
+            cartRepository.save(cart); // 将已提交的商品标记为已提交
         }
 
         Orders order = new Orders();

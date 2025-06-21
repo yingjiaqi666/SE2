@@ -23,6 +23,8 @@ public class CartVO {
     private BigDecimal price;
 
     private String title;
+
+    private String commited;
     //下面为返回前端的额外信息
 
     private String description;

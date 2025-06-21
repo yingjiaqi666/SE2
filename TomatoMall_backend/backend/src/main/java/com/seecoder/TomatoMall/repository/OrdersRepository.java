@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface OrdersRepository extends JpaRepository<Orders,Integer> {
     long countByUserIdAndStatus(Integer userId, String status);
+    List<Orders> findByUserId(Integer userId);
     Optional<Orders> findByOrderId(Integer orderId);
     List<Orders> findByStatusAndCreateTimeBefore(String pending, LocalDateTime cutoff);
 }

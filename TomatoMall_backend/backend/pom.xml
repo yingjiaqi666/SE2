@@ -57,8 +57,20 @@
 			<artifactId>alipay-sdk-java</artifactId>
 			<version>4.31.56.ALL</version>
 		</dependency>
-		</dependencies>
 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.11.0</version>
+		</dependency>
+		</dependencies>
+	<repositories>
+		<repository>
+			<id>aliyun</id>
+			<name>Aliyun Maven</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>

@@ -1,6 +1,6 @@
 package com.seecoder.BlueWhale.vo;
 
-import java.util.TimeZone;
+import java.util.Date;
 
 import com.seecoder.BlueWhale.po.Comment;
 
@@ -19,9 +19,7 @@ public class CommentVO {
     private String commentTitle;
     private String fatherId;
     private Integer userId;
-    private TimeZone time;
-    private String bookTitle;
-    private String cover;
+    private Date time;
 
     public Comment toPO(){
         Comment comment=new Comment();
@@ -31,6 +29,7 @@ public class CommentVO {
         comment.setCommentTitle(this.commentTitle);
         comment.setFatherId(this.fatherId);
         comment.setUserId(this.userId);
+        comment.setTime(this.time);
         return comment;
     }
 }

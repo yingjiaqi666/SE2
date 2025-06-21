@@ -1,5 +1,6 @@
 package com.seecoder.BlueWhale.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,7 @@ public class CommentServiceImp implements CommentService{
                 throw BlueWhaleException.commentNotFound();
             }
         }
+        comment.setTime(new Date());
         commentRepository.save(comment);
         return comment.toVO();
     }

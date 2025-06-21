@@ -36,7 +36,7 @@ public class User {
 
     //必须注意，在Java中用驼峰，在MySQL字段中用连字符_
     @Basic
-    @Column(name = "avatar")
+    @Column(name = "avatar", length = 1024)  // 修改为1024或更大
     private String avatar;
 
     @Basic

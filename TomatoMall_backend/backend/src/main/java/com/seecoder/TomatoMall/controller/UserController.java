@@ -47,8 +47,9 @@ public class UserController {
 
     @PutMapping
     public ResultVO<String> updateInformation(@RequestBody UserVO userVO){
+        System.out.println("here:"+userVO);
         if(userService.updateInformation(userVO))
             return ResultVO.buildSuccess("更新成功");
-        return null;//不会来这一步
+        return null;
     }
 }

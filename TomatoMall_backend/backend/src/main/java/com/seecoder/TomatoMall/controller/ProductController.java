@@ -58,4 +58,6 @@ public class ProductController {
         return ResultVO.buildSuccess(productService.getStockpile(productId));//如果productid错误则返回null
     }
 
+
+
 }

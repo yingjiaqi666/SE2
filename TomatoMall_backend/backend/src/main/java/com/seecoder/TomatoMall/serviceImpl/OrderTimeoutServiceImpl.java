@@ -25,7 +25,7 @@ public class OrderTimeoutServiceImpl {
     @Autowired
     private CartRepository cartRepository;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 100000)
     @Transactional
     public void scanAndExpirePendingOrders() {
         LocalDateTime cutoff = LocalDateTime.now().minusMinutes(30);

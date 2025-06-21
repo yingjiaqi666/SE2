@@ -17,10 +17,10 @@ public class ImageServiceImpl implements ImageService {
     UserService userService;
 
     @Override
-    public Boolean upload(MultipartFile file) {
+    public String upload(MultipartFile file) {
         try {
             String url = ossUtil.upload(file.getOriginalFilename(),file.getInputStream());
-            return userService.updateImage(url);
+            return url;
         }catch (Exception e){
             throw TomatoMallException.fileUploadFail();
         }

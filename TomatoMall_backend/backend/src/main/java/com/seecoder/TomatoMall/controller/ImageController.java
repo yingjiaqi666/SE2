@@ -17,7 +17,7 @@ public class ImageController {
     ImageServiceImpl imageService;
 
     @PostMapping("/update_image")
-    public ResultVO<Boolean> updateImage(@RequestParam("file") MultipartFile file){
+    public ResultVO<String> updateImage(@RequestParam("file") MultipartFile file){
         return ResultVO.buildSuccess(imageService.upload(file));
     }
 }

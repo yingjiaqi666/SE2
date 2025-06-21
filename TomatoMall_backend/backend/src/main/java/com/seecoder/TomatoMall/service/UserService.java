@@ -11,7 +11,7 @@ public interface UserService {
 
     Boolean updateInformation(UserVO userVO);
 
-    Boolean updateImage(String url);
+//    Boolean updateImage(String url);
 
     public String getImage();
 }

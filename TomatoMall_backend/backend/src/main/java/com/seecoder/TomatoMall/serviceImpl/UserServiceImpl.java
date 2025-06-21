@@ -96,15 +96,15 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public Boolean updateImage(String url) {
-        User user=securityUtil.getCurrentUser();
-        if(url!=null){
-            user.setAvatar(url);
-            userRepository.save(user);
-            return true;
-        }
-        return false;
-    }
+//    public Boolean updateImage(String url) {
+//        User user=securityUtil.getCurrentUser();
+//        if(url!=null){
+//            user.setAvatar(url);
+//            userRepository.save(user);
+//            return true;
+//        }
+//        return false;
+//    }
 
     public String getImage(){
         String url = securityUtil.getCurrentUser().getAvatar();

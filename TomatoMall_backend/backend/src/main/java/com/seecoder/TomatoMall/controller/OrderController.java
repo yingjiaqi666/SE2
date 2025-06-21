@@ -13,8 +13,10 @@ import com.seecoder.TomatoMall.po.Stockpile;
 import com.seecoder.TomatoMall.repository.CartRepository;
 import com.seecoder.TomatoMall.repository.OrdersRepository;
 import com.seecoder.TomatoMall.repository.StockpileRepository;
+import com.seecoder.TomatoMall.service.OrderService;
 import com.seecoder.TomatoMall.util.AliPay;
 import com.seecoder.TomatoMall.vo.AliForm;
+import com.seecoder.TomatoMall.vo.OrdersVO;
 import com.seecoder.TomatoMall.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +56,9 @@ public class OrderController {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private OrderService orderService;
 
 
 
@@ -104,6 +109,7 @@ public class OrderController {
         }
     }
 
+
     // 支付宝服务器后台调用这里，做业务更新，一定要返回 "success"
     @PostMapping("/notify")
     public String notifyUrl(HttpServletRequest request) throws AlipayApiException {
@@ -132,6 +138,11 @@ public class OrderController {
             }
         }
         return "failure";
+    }
+
+    @GetMapping
+    public ResultVO<List<OrdersVO>> getAllOrders() {
+        return ResultVO.buildSuccess(orderService.getAllOrders());
     }
 
 }

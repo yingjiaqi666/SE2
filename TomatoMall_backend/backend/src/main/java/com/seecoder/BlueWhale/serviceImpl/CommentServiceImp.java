@@ -1,5 +1,6 @@
 package com.seecoder.BlueWhale.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class CommentServiceImp implements CommentService{
 
     @Override
     public List<CommentVO> getAll() {
-        return commentRepository.findByFatherId("").stream().map(Comment::toVO).collect(Collectors.toList());
+        return commentRepository.findByFatherId(null).stream().map(Comment::toVO).collect(Collectors.toList());
     }
 
     @Override
@@ -40,6 +41,7 @@ public class CommentServiceImp implements CommentService{
                 throw BlueWhaleException.commentNotFound();
             }
         }
+        comment.setTime(new Date());
         commentRepository.save(comment);
         return comment.toVO();
     }

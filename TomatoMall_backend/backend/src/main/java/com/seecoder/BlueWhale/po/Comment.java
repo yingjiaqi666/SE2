@@ -5,14 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+import java.util.Date;
 import javax.persistence.*;
-
-
-import com.seecoder.BlueWhale.exception.BlueWhaleException;
-import com.seecoder.BlueWhale.serviceImpl.ProductServiceImp;
 import com.seecoder.BlueWhale.vo.CommentVO;
-import com.seecoder.BlueWhale.vo.ProductVO;
 
 @Getter
 @Setter
@@ -45,21 +40,20 @@ public class Comment {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Basic
+    @Column(name = "time")
+    private Date time;
+
     public CommentVO toVO(){
-        ProductServiceImp productService = new ProductServiceImp();
+        
         CommentVO vo = new CommentVO();
-        ProductVO book = productService.getById(this.bookId);
-        if(book == null){
-            throw BlueWhaleException.productNotFound();
-        }
         vo.setId(this.id);
         vo.setBookId(this.bookId);
         vo.setComment(this.comment);
         vo.setCommentTitle(this.commentTitle);
         vo.setFatherId(this.fatherId);
         vo.setUserId(this.userId);
-        vo.setBookTitle(book.getTitle());
-        vo.setCover(book.getCover());
+        vo.setTime(time);
         return vo;
     }
 

@@ -53,6 +53,16 @@ public class CartServiceImpl implements CartService {
             throw TomatoMallException.overStock();
         }
         else {
+            // 检查是否已存在相同商品
+            Cart existingCart = cartRepository.findByProductIdAndUserId(productId, securityUtil.getCurrentUser().getId());
+            if (existingCart != null) {
+                // 如果已存在，更新数量
+                existingCart.setQuantity(existingCart.getQuantity() + quantity);
+                cartRepository.save(existingCart);
+                return cartVO;
+            }
+
+
             Cart savedCart = cartVO.toPO();
             savedCart.setUserId(securityUtil.getCurrentUser().getId());
             Cart saveTemp = cartRepository.save(savedCart);
@@ -90,7 +100,9 @@ public class CartServiceImpl implements CartService {
         if(cartRepository.findAll().isEmpty()){
             return result;
         }
-        List<CartVO> cartList = cartRepository.findAll().stream().map(Cart::toVO).collect(Collectors.toList());
+        User user = securityUtil.getCurrentUser();
+        Integer userId = user.getId();
+        List<CartVO> cartList = cartRepository.findAll().stream().filter(cart -> userId.equals(cart.getUserId())).map(Cart::toVO).collect(Collectors.toList());
         result.setItems(cartList);
         result.setTotal(cartList.size());
         BigDecimal total = new BigDecimal(0);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -64,26 +64,29 @@
 			<version>1.11.0</version>
 		</dependency>
 
+		<!-- 新增拼音转换依赖 -->
 		<dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>2.5.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.huaban</groupId>
-			<artifactId>jieba-analysis</artifactId>
-			<version>1.0.2</version>
-		</dependency>
 
-		</dependencies>
+	</dependencies>
+
 	<repositories>
 		<repository>
 			<id>aliyun</id>
 			<name>Aliyun Maven</name>
 			<url>https://maven.aliyun.com/repository/public</url>
 		</repository>
+		<!-- 新增仓库（如需） -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -100,5 +103,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

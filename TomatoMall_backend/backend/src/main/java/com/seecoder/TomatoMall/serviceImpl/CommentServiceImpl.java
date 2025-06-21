@@ -41,6 +41,10 @@ public class CommentServiceImpl implements CommentService{
         if(comment==null){
             throw TomatoMallException.commentNotFound();
         }
+        CommentVO vo = comment.toVO();
+        Product book = productRepository.findById(vo.getBookId()).get();
+        vo.setBookTitle(book.getTitle());
+        vo.setCover(book.getCover());
         return commentRepository.findById(id).toVO();
     }
 

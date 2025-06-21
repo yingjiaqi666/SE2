@@ -27,6 +27,7 @@ public class BlueWhaleException extends RuntimeException{
     public static BlueWhaleException userNameNotFound(){return new BlueWhaleException("用户名不存在");}
 
     public static BlueWhaleException productNotFound(){return  new BlueWhaleException("商品不存在");}
+    public static BlueWhaleException commentNotFound(){return  new BlueWhaleException("评论不存在");}
 
     public static BlueWhaleException tagNotFound(){return  new BlueWhaleException("Id不存在");}
     public static BlueWhaleException tagNameAlreadyExists(){return new BlueWhaleException("tag已存在");}

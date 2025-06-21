@@ -3,6 +3,9 @@ package com.seecoder.TomatoMall.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.seecoder.TomatoMall.po.Product;
+import com.seecoder.TomatoMall.repository.ProductRepository;
+import com.seecoder.TomatoMall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +21,18 @@ public class CommentServiceImpl implements CommentService{
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public List<CommentVO> getAll() {
-        return commentRepository.findByFatherIdIsNull().stream().map(Comment::toVO).collect(Collectors.toList());
+        List<CommentVO> list = commentRepository.findByFatherIdIsNull().stream().map(Comment::toVO).collect(Collectors.toList());
+        for(CommentVO vo : list){
+            Product book = productRepository.findById(vo.getBookId()).get();
+            vo.setBookTitle(book.getTitle());
+            vo.setCover(book.getCover());
+        }
+        return list;
     }
 
     @Override

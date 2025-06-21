@@ -1,4 +1,4 @@
-package com.seecoder.BlueWhale.po;
+package com.seecoder.TomatoMall.po;
 
 
 import lombok.Getter;
@@ -9,10 +9,10 @@ import lombok.Setter;
 import javax.persistence.*;
 
 
-import com.seecoder.BlueWhale.exception.BlueWhaleException;
-import com.seecoder.BlueWhale.serviceImpl.ProductServiceImp;
-import com.seecoder.BlueWhale.vo.CommentVO;
-import com.seecoder.BlueWhale.vo.ProductVO;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
+import com.seecoder.TomatoMall.serviceImpl.ProductServiceImp;
+import com.seecoder.TomatoMall.vo.CommentVO;
+import com.seecoder.TomatoMall.vo.ProductVO;
 
 @Getter
 @Setter
@@ -50,7 +50,7 @@ public class Comment {
         CommentVO vo = new CommentVO();
         ProductVO book = productService.getById(this.bookId);
         if(book == null){
-            throw BlueWhaleException.productNotFound();
+            throw TomatoMallException.productNotFound();
         }
         vo.setId(this.id);
         vo.setBookId(this.bookId);

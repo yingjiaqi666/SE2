@@ -1,4 +1,4 @@
-package com.seecoder.BlueWhale.serviceImpl;
+package com.seecoder.TomatoMall.serviceImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.seecoder.BlueWhale.exception.BlueWhaleException;
-import com.seecoder.BlueWhale.po.Comment;
-import com.seecoder.BlueWhale.repository.CommentRepository;
-import com.seecoder.BlueWhale.service.CommentService;
-import com.seecoder.BlueWhale.vo.CommentVO;
+import com.seecoder.TomatoMall.exception.TomatoMallException;
+import com.seecoder.TomatoMall.po.Comment;
+import com.seecoder.TomatoMall.repository.CommentRepository;
+import com.seecoder.TomatoMall.service.CommentService;
+import com.seecoder.TomatoMall.vo.CommentVO;
 
 @Service
 public class CommentServiceImp implements CommentService{
@@ -27,7 +27,7 @@ public class CommentServiceImp implements CommentService{
     public CommentVO getById(int id) {
         Comment comment = commentRepository.findById(id);
         if(comment==null){
-            throw BlueWhaleException.commentNotFound();
+            throw TomatoMallException.commentNotFound();
         }
         return commentRepository.findById(id).toVO();
     }
@@ -37,7 +37,7 @@ public class CommentServiceImp implements CommentService{
         if(commentVO.getFatherId()!=null){
             Comment comment = commentRepository.findById(Integer.parseInt(commentVO.getFatherId()));
             if(comment == null){
-                throw BlueWhaleException.commentNotFound();
+                throw TomatoMallException.commentNotFound();
             }
         }
         commentRepository.save(commentVO.toPO());
@@ -48,7 +48,7 @@ public class CommentServiceImp implements CommentService{
     public Boolean deleteComment(String id) {
         Comment comment = commentRepository.findById(Integer.parseInt(id));
         if(comment==null){
-            throw BlueWhaleException.commentNotFound();
+            throw TomatoMallException.commentNotFound();
         }
         commentRepository.delete(comment);
         List<Comment> comments= commentRepository.findByFatherId(id);

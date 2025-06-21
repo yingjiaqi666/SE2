@@ -1,8 +1,8 @@
-package com.seecoder.BlueWhale.service;
+package com.seecoder.TomatoMall.service;
 
 import java.util.List;
 
-import com.seecoder.BlueWhale.vo.CommentVO;
+import com.seecoder.TomatoMall.vo.CommentVO;
 
 public interface CommentService {
     List<CommentVO> getAll();

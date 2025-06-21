@@ -1,7 +1,7 @@
-package com.seecoder.BlueWhale.controller;
-import com.seecoder.BlueWhale.service.CommentService;
-import com.seecoder.BlueWhale.vo.CommentVO;
-import com.seecoder.BlueWhale.vo.ResultVO;
+package com.seecoder.TomatoMall.controller;
+import com.seecoder.TomatoMall.service.CommentService;
+import com.seecoder.TomatoMall.vo.CommentVO;
+import com.seecoder.TomatoMall.vo.ResultVO;
 
 import java.util.List;
 

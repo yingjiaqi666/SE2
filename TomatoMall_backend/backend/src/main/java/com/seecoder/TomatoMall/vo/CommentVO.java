@@ -1,8 +1,8 @@
-package com.seecoder.BlueWhale.vo;
+package com.seecoder.TomatoMall.vo;
 
 import java.util.TimeZone;
 
-import com.seecoder.BlueWhale.po.Comment;
+import com.seecoder.TomatoMall.po.Comment;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

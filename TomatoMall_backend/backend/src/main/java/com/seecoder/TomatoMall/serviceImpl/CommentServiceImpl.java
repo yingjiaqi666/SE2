@@ -49,6 +49,17 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public List<CommentVO> searchByFatherId(String fatherId) {
+        CommentVO father = getById(Integer.parseInt(fatherId));
+        List<CommentVO> list = commentRepository.findByFatherId(fatherId).stream().map(Comment::toVO).collect(Collectors.toList());
+        for (CommentVO vo : list) {
+            vo.setBookTitle(father.getBookTitle());
+            vo.setCover(father.getCover());
+        }
+        return list;
+    }
+
+    @Override
     public CommentVO addComment(CommentVO commentVO) {
         if(commentVO.getFatherId()!=null){
             Comment comment = commentRepository.findById(Integer.parseInt(commentVO.getFatherId()));

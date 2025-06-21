@@ -39,12 +39,17 @@ public class CommentController {
         }
     }
 
-    //search
 
-    //TODO
+
+    //search
 
     @GetMapping("/book/{id}")
     public ResultVO<List<CommentVO>> searchByBook(@PathVariable Integer Id){
         return ResultVO.buildSuccess(commentService.searchByBook(Id.toString()));
+    }
+
+    @GetMapping("/father/{id}")
+    public ResultVO<List<CommentVO>> searchByFatherId(@PathVariable String id){
+        return ResultVO.buildSuccess(commentService.searchByFatherId(id));
     }
 }

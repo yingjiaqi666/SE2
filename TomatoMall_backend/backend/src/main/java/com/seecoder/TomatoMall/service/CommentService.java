@@ -10,4 +10,5 @@ public interface CommentService {
     CommentVO addComment(CommentVO commentVO);
     Boolean deleteComment(String id);
     List<CommentVO> searchByBook(String bookId);
+    List<CommentVO> searchByFatherId(String fatherId);
 }

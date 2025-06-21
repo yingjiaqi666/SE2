@@ -47,4 +47,9 @@ public class AdvertisementController {
         }
         return null;
     }
+
+    @GetMapping("/get_image/{productId}")
+    public ResultVO<String> getImage(@PathVariable Integer productId){
+        return ResultVO.buildSuccess(advertisementService.getImageUrl(productId));
+    }
 }

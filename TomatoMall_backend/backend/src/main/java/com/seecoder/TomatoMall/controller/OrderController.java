@@ -98,9 +98,9 @@ public class OrderController {
         Map<String, String> params = AliPay.extractParams(request);
         boolean ok = AliPay.verifySignature(params, alipayPublicKey, charset, signType);
         if (ok) {
-            return "redirect:http://127.0.0.1:5173/cart";
+            return "redirect:http://localhost:7777/cart";
         } else {
-            return "redirect:http://127.0.0.1:5173/cart?payResult=fail";
+            return "redirect:http://localhost:7777/cart?payResult=fail";
         }
     }
 

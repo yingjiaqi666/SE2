@@ -12,4 +12,6 @@ public interface AdvertisementService {
     AdvertisementVO addAdvertisement(AdvertisementVO advertisementVO);
 
     Boolean deleteAdvertisement(int id);
+
+    String getImageUrl(int id);
 }

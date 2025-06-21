@@ -19,7 +19,9 @@ public class CartVO {
     private Integer productId;
 
     private Integer quantity;
+
     private BigDecimal price;
+
     private String title;
     //下面为返回前端的额外信息
 

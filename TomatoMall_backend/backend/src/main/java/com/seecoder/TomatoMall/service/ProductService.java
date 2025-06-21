@@ -13,4 +13,5 @@ public interface ProductService {
     Boolean deleteProduct(String id);
     Boolean changeStockpile(String productid, int amount);
     Stockpile getStockpile(String productid);
+    String getCover(String productid);
 } 

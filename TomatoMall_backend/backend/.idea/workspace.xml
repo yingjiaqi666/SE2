@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0457f267-6c3e-4d7a-ad08-9b2fdefeafd5" name="更改" comment="Revert &quot;finish all lab2 tests&quot;&#10;&#10;This reverts commit d581f783">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/util/PinyinUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/controller/ProductSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/controller/ProductSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/serviceImpl/ProductSearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/serviceImpl/ProductSearchServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/vo/ProductSimilarityVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/vo/ProductSimilarityVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +104,7 @@
       <workItem from="1746671001772" duration="85000" />
       <workItem from="1750389044395" duration="10300000" />
       <workItem from="1750487326162" duration="306000" />
-      <workItem from="1750487694161" duration="2113000" />
+      <workItem from="1750487694161" duration="8418000" />
     </task>
     <servers />
   </component>
@@ -128,7 +122,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="HEAD" />
+                        <option value="xzy" />
                       </list>
                     </value>
                   </entry>

@@ -58,4 +58,9 @@ public class ProductController {
         return ResultVO.buildSuccess(productService.getStockpile(productId));//如果productid错误则返回null
     }
 
+    @GetMapping("/get_image/{productId}")
+    public ResultVO<String> getImage(@PathVariable String productId){
+        return ResultVO.buildSuccess(productService.getCover(productId));
+    }
+
 }

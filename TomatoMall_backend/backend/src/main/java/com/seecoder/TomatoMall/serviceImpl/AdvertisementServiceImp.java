@@ -67,5 +67,10 @@ public class AdvertisementServiceImp implements AdvertisementService{
         return true;
     }
 
+    @Override
+    public String getImageUrl(int id) {
+        return advertisementRepository.findById(id).getImgUrl();
+    }
+
     
 }

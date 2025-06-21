@@ -107,4 +107,8 @@ public class ProductServiceImp implements ProductService{
         return stockpileRepository.findByProductid(productid);
     }
 
+    @Override
+    public String getCover(String productid){
+        return productRepository.findById(Integer.parseInt(productid)).getCover();
+    }
 }

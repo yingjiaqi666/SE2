@@ -26,9 +26,9 @@ public class TagController {
         return ResultVO.buildSuccess(tagService.getById(idInt));
     }
 
-    @DeleteMapping("/tag/{tagid}")
-    public ResultVO<String> deleteBook(@PathVariable Integer tagid,@RequestBody Integer bookId){
-        if(tagService.deleteBook(tagid.toString(),bookId.toString())){
+    @DeleteMapping("/tag/{tagId}")
+    public ResultVO<String> deleteBook(@PathVariable Integer tagId,@RequestBody Integer bookId){
+        if(tagService.deleteBook(tagId.toString(),bookId.toString())){
             return ResultVO.buildSuccess("删除成功");
         }else{
             ResultVO.buildFailure("书籍不存在");
@@ -37,7 +37,7 @@ public class TagController {
         return null;
     }
 
-    @PatchMapping("/tag/{tagid}")
+    @PatchMapping("/tag/{tagId}")
     public ResultVO<String> addBook(@PathVariable Integer tagId,@RequestBody Integer bookId){
         if(tagService.addBook(tagId.toString(),bookId.toString())){
             return ResultVO.buildSuccess("添加成功");
@@ -52,14 +52,15 @@ public class TagController {
         return ResultVO.buildSuccess(tagService.addTag(tag));
     }
 
-    @DeleteMapping("/tag/delete/{tagid}")
+    @DeleteMapping("/tag/delete/{tagId}")
     public ResultVO<String> deleteTag(@PathVariable String tagId ){
+        System.out.println(tagId);
         if(tagService.deleteTag(tagId))
             return ResultVO.buildSuccess("删除tag成功");
         return ResultVO.buildFailure("tag不存在");
     }
 
-    @GetMapping("/tag/books/{tagid}")
+    @GetMapping("/tag/books/{tagId}")
     public ResultVO<List<String>> getBooks(@PathVariable String tagId){
         return ResultVO.buildSuccess(tagService.getBooks(tagId));
     }

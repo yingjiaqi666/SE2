@@ -107,7 +107,9 @@ public class CartServiceImpl implements CartService {
         result.setTotal(cartList.size());
         BigDecimal total = new BigDecimal(0);
         for(CartVO cartVO : cartList){
-            total = total.add(cartVO.getPrice().multiply(BigDecimal.valueOf(cartVO.getQuantity())));
+            if(cartVO.getCommited().equals("false")){
+                total = total.add(cartVO.getPrice().multiply(BigDecimal.valueOf(cartVO.getQuantity())));
+            }
         }
         result.setTotalAmount(total);
         return result;

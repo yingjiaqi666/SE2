@@ -28,7 +28,7 @@ public class OrderTimeoutServiceImpl {
     @Scheduled(fixedRate = 1000)
     @Transactional
     public void scanAndExpirePendingOrders() {
-        LocalDateTime cutoff = LocalDateTime.now().minusMinutes(30);
+        /*LocalDateTime cutoff = LocalDateTime.now().minusMinutes(30);
         List<Orders> expired = ordersRepository
                 .findByStatusAndCreateTimeBefore("PENDING", cutoff);
         if(expired.isEmpty()) {
@@ -49,6 +49,6 @@ public class OrderTimeoutServiceImpl {
             // 2) 更新订单状态
             order.setStatus("OVERTIME");
             ordersRepository.save(order);
-        }
+        }*/
     }
 }

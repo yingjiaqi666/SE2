@@ -36,4 +36,5 @@ public class TomatoMallException extends RuntimeException{
 
     public static TomatoMallException tagNameAlreadyExists(){return new TomatoMallException("tag已存在");}
     public static TomatoMallException tagNotFound(){return  new TomatoMallException("Id不存在");}
+    public static TomatoMallException unpaidOrderOversized() {return new TomatoMallException("未支付订单过多");}
 }

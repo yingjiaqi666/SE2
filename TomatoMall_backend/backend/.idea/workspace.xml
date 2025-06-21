@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0457f267-6c3e-4d7a-ad08-9b2fdefeafd5" name="更改" comment="Revert &quot;finish all lab2 tests&quot;&#10;&#10;This reverts commit d581f783">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/controller/TagController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/po/Tag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/repository/TagRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/service/TagService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/serviceImpl/TagServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/vo/TagVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/exception/TomatoMallException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/seecoder/TomatoMall/exception/TomatoMallException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +102,7 @@
       <workItem from="1750389044395" duration="10300000" />
       <workItem from="1750418007276" duration="22834000" />
       <workItem from="1750447518097" duration="3015000" />
-      <workItem from="1750481143895" duration="2856000" />
+      <workItem from="1750481143895" duration="3497000" />
     </task>
     <servers />
   </component>
@@ -126,7 +120,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="origin/xzy" />
                       </list>
                     </value>
                   </entry>

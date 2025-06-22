@@ -124,11 +124,18 @@ public class CartServiceImpl implements CartService {
             throw TomatoMallException.unpaidOrderOversized();
         }
 
+
+
         List<String> cartItemIds = req.getCartItemIds();
         CheckoutRequest.ShippingAddress shipping_address = req.getShipping_address();
         String payment_method = req.getPayment_method();
         List<Integer> ids = cartItemIds.stream().map(Integer::valueOf).collect(Collectors.toList());
         List<Cart> carts = cartRepository.findAllById(ids);
+        for(Cart cart : carts) {
+            if ( !cart.getCommited().equals("false")) {
+                carts.remove(cart);
+            }
+        }
         if (carts.size() != ids.size()) {
             throw TomatoMallException.productNotInCart();
         }

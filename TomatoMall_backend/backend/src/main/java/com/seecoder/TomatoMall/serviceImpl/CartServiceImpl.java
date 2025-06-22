@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -124,20 +125,21 @@ public class CartServiceImpl implements CartService {
             throw TomatoMallException.unpaidOrderOversized();
         }
 
+        CheckoutRequest.ShippingAddress shipping_address = req.getShipping_address();
+        String payment_method = req.getPayment_method();
 
 
         List<String> cartItemIds = req.getCartItemIds();
-        CheckoutRequest.ShippingAddress shipping_address = req.getShipping_address();
-        String payment_method = req.getPayment_method();
         List<Integer> ids = cartItemIds.stream().map(Integer::valueOf).collect(Collectors.toList());
         List<Cart> carts = cartRepository.findAllById(ids);
-        for(Cart cart : carts) {
-            if ( !cart.getCommited().equals("false")) {
-                carts.remove(cart);
+
+        Iterator<Cart> iterator = carts.iterator();
+        while (iterator.hasNext()) {
+            Cart c = iterator.next();
+            if (!c.getCommited().equals("false")) {
+                iterator.remove();
+                cartItemIds.remove(String.valueOf(c.getCartItemId()));
             }
-        }
-        if (carts.size() != ids.size()) {
-            throw TomatoMallException.productNotInCart();
         }
 
 

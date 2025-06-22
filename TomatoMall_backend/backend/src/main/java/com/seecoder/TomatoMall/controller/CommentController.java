@@ -31,8 +31,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResultVO<String> deleteComment(@PathVariable Integer Id){
-        if(commentService.deleteComment(Id.toString())){
+    public ResultVO<String> deleteComment(@PathVariable Integer id){
+        if(commentService.deleteComment(id.toString())){
             return ResultVO.buildSuccess("添加成功");
         }else{
             return ResultVO.buildFailure("书籍不存在");
